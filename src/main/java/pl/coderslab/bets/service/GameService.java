@@ -12,4 +12,6 @@ public interface GameService {
     List<Game> findGamesEnding(Timestamp timestamp, String status);
 
     List<Game> findGamesByStatus(String status);
+
+    List<Game> findFinishedGamesNotPaidOut(String status);
 }

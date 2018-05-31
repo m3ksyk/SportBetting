@@ -34,4 +34,9 @@ public class GameServiceImpl implements GameService {
     public List<Game> findGamesByStatus(String status) {
         return gameRepository.findAllByStatusEquals(status);
     }
+
+    @Override
+    public List<Game> findFinishedGamesNotPaidOut(String status) {
+        return gameRepository.findAllByStatusEqualsAndBetsPaidOutFalse(status);
+    }
 }

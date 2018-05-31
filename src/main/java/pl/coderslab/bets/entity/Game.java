@@ -29,6 +29,11 @@ public class Game {
     @JoinColumn
     private Team awayTeam;
 
+    @OneToOne
+    private Team winner;
+
+    private boolean drawn;
+
     private int homeTeamScore;
 
     private int awayTeamScore;
@@ -38,5 +43,7 @@ public class Game {
     private int awayTeamOdd;
 
     private String status;
+
+    private boolean betsPaidOut;
 
 }

@@ -23,7 +23,7 @@ public class Bet {
 
     private BigDecimal amount;
 
-    private BigDecimal rate;
+    private BigDecimal rate; //rate is gotten from game team odd
 
     @OneToOne
     @JoinColumn
@@ -36,7 +36,6 @@ public class Bet {
 
     private BigDecimal amountWon;
 
-    //pominąć i liczyc przy określaniu wyniku?
     private BigDecimal calculateWonAmount(BigDecimal amount, BigDecimal rate, boolean win){
         if (win){
             return amount.multiply(rate);
@@ -44,6 +43,8 @@ public class Bet {
             return BigDecimal.valueOf(0);
         }
     }
+
+    private boolean paidOut;
 
 
 }

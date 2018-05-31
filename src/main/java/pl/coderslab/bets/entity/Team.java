@@ -30,6 +30,8 @@ public class Team {
     private int gamesWon;
     private int gamesLost;
     private int draws;
+    private int goalsScored;
+    private int goalsLost;
 
     private int tableStanding;
 

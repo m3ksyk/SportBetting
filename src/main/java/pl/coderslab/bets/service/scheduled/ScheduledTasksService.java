@@ -142,10 +142,37 @@ public class ScheduledTasksService {
         }
 
         for (Game g: ending) {
+            Team homeTeam = g.getHomeTeam();
+            Team awayTeam = g.getAwayTeam();
+
             g.setStatus("finished");
-            g.getHomeTeam().setInGame(false);
-            g.getAwayTeam().setInGame(false);
+            if (g.getAwayTeamScore() > g.getHomeTeamScore()) {
+                g.setWinner(awayTeam);
+                awayTeam.setGamesWon(awayTeam.getGamesWon() + 1);
+                homeTeam.setGoalsLost(homeTeam.getGamesLost() + 1);
+            } else if(g.getAwayTeamScore() < g.getHomeTeamScore()){
+                g.setWinner(homeTeam);
+                awayTeam.setGamesLost(awayTeam.getGamesLost() + 1);
+                homeTeam.setGamesWon(homeTeam.getGamesWon() +1 );
+            }else{
+                g.setWinner(null);
+                g.setDrawn(true);
+                awayTeam.setDraws(awayTeam.getDraws() +1);
+                homeTeam.setDraws(homeTeam.getDraws() +1);
+            }
+
+            homeTeam.setInGame(false);
+            homeTeam.setGoalsScored(homeTeam.getGoalsScored() + g.getHomeTeamScore());
+            homeTeam.setGoalsLost(homeTeam.getGoalsLost() + g.getAwayTeamScore());
+
+            awayTeam.setInGame(false);
+            awayTeam.setGoalsScored(awayTeam.getGoalsScored() + g.getAwayTeamScore());
+            awayTeam.setGoalsLost(awayTeam.getGoalsLost() + g.getHomeTeamScore());
+
+            teamService.save(homeTeam);
+            teamService.save(awayTeam);
             gameService.save(g);
+
         }
     }
     //add to game results by random every minute
@@ -157,6 +184,18 @@ public class ScheduledTasksService {
             g.setAwayTeamScore(g.getAwayTeamScore() + random.nextInt(1));
             g.setHomeTeamScore(g.getAwayTeamScore() + random.nextInt(1));
             gameService.save(g);
+        }
+    }
+
+    //finds bets not paid out
+    @Scheduled(cron = "0/30 * * * * ?")
+    public void gamesPayout(){
+        List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");
+
+        for (Game g : finishedGames) {
+            //TODO bets calculating and paying out here
+
+//            gameService.save(g);
         }
     }
 

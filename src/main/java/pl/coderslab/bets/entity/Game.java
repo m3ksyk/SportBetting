@@ -3,6 +3,9 @@ package pl.coderslab.bets.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -16,8 +19,8 @@ public class Game {
     @JoinColumn   //spr czy nie zakrzaczy
     private Sport sport;
 
-    private Date start;
-    private Date end;
+    private Timestamp start;
+    private Timestamp end;
 
     @OneToOne
     @JoinColumn

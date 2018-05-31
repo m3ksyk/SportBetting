@@ -14,6 +14,8 @@ import pl.coderslab.bets.service.LeagueService;
 import pl.coderslab.bets.service.SportService;
 import pl.coderslab.bets.service.TeamService;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,12 +38,13 @@ public class ScheduledTasksService {
     GameService gameService;
 
     ScheduledTasksService() {
-        this.createSports();
-        this.createLeagues();
-        this.createTeams();
-        this.regenerateGames();
-        this.gameStatusCheck();
-        this.resultRigger();
+        //odkomentowac jak zacznie dzialac
+//        this.createSports();
+//        this.createLeagues();
+//        this.createTeams();
+//        this.regenerateGames();
+//        this.gameStatusCheck();
+//        this.resultRigger();
     }
 
     //for now we only have one sport : football, other sports may be added if functionalities are working
@@ -102,12 +105,14 @@ public class ScheduledTasksService {
             teams.remove(id1);
             teams.remove(id2);
 
+            //for now odds are created by random using faker
             game.setHomeTeamOdd(faker.number().randomDigitNotZero());
             game.setAwayTeamOdd(faker.number().randomDigitNotZero());
 
-            long dateInMillis= calendar.getTimeInMillis();
-            Date startDate=new Date(dateInMillis + (TimeUnit.MINUTES.toMinutes(5)));
-            Date endDate=new Date(dateInMillis + (TimeUnit.MINUTES.toMinutes(5)));
+            //setting start and end date for the games
+            Timestamp startDate= (Timestamp) new Date(System.currentTimeMillis() + 5 *60*1000);
+            Timestamp endDate= (Timestamp) new Date(System.currentTimeMillis() + 10 *60*1000);
+
             game.setStart(startDate);
             game.setEnd(endDate);
             game.setStatus("scheduled");
@@ -118,11 +123,11 @@ public class ScheduledTasksService {
     //checks every minute for games going live or finishing
     @Scheduled(cron = "0 0/1 * 1/1 * ?")
     public void gameStatusCheck(){
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
 
-        List<Game> goingLive = gameService.findGamesStarting((java.sql.Date) date, "scheduled");
-        List<Game> ending = gameService.findGamesEnding((java.sql.Date) date, "live");
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+
+        List<Game> goingLive = gameService.findGamesStarting(timestamp, "scheduled");
+        List<Game> ending = gameService.findGamesEnding(timestamp, "live");
 
         for (Game g: goingLive) {
             g.setStatus("live");
@@ -135,9 +140,8 @@ public class ScheduledTasksService {
         }
     }
     //add to game results by random every minute
-    @Scheduled(cron = "0 1/1 * 1/1 * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void resultRigger(){
-        //add logic here for setting results for every live game
         List<Game> liveGames = gameService.findGamesByStatus("live");
         Random random = new Random();
         for (Game g : liveGames) {

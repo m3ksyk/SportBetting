@@ -7,29 +7,28 @@
 </head>
 <body>
 <div class="container-fluid">
-Welcome!
-Please provide your data:
-    <!--th:object="${user}"-->
-<form th:action="@{/register}"  method="post">
-    <!--<p th:if="${#fields.hasErrors('user')}" th:errors="*{user}">  </p>-->
-dodac obsluge bledow
-    <p>username: <input type="text" th:field="${username}" /></p>
-    <p th:each="error : ${#fields.errors('username')}"
-       th:text="${error}">Validation error</p>
-    <p>email: <input type="text" th:field="${email}" /></p>
-    <p th:each="error : ${#fields.errors('email')}"
-       th:text="${error}">Validation error</p>
-    <p>password: <input type="text" th:field="${password}" /></p>
-    <p th:each="error : ${#fields.errors('password')}"
-       th:text="${error}">Validation error</p>
-    <p>credit card: <input type="text" th:field="${creditCardNum}" /></p>
-    <p th:each="error : ${#fields.errors('creditCardNum')}"
-       th:text="${error}">Validation error</p>
+
+    <p>Welcome! Please provide your data: </p>
+
+    <form th:action="@{/register}"  th:object="${user}" method="post">
+
+    <p>username: <input id="username" type="text" th:field="*{username}" /></p>
+    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"> error msg</p>
+
+    <p>email: <input id="email" type="text" th:field="*{email}" /></p>
+    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"> error msg</p>
+
+    <p>password: <input id="password" type="text" th:field="*{password}" /></p>
+    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"> error msg</p>
+
+    <p>credit card: <input id="creditCardNum" type="text" th:field="*{creditCardNum}" /></p>
+    <p th:if="${#fields.hasErrors('creditCardNum')}" th:errors="*{creditCardNum}"> error msg</p>
 
     <p><input type="submit" value="Submit" /></p>
 
     Disclaimer: All new users get FREE 10 credits for bets. ENJOY. IT'S ON THE HOUSE.
-</form>
+
+    </form>
 </div>
 </body>
 </html>

@@ -6,7 +6,7 @@ import pl.coderslab.bets.entity.Game;
 import pl.coderslab.bets.repository.GameRepository;
 import pl.coderslab.bets.service.GameService;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -21,13 +21,13 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<Game> findGamesStarting(Date date, String status) {
-        return gameRepository.findAllByStartAfterAndStatusEquals(date,status);
+    public List<Game> findGamesStarting(Timestamp timestamp, String status) {
+        return gameRepository.findAllByStartAfterAndStatusEquals(timestamp, status);
     }
 
     @Override
-    public List<Game> findGamesEnding(Date date, String status) {
-        return gameRepository.findAllByEndAfterAndStatusEquals(date, status);
+    public List<Game> findGamesEnding(Timestamp timestamp, String status) {
+        return gameRepository.findAllByEndAfterAndStatusEquals(timestamp, status);
     }
 
     @Override

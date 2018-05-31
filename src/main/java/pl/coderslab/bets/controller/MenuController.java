@@ -1,17 +1,12 @@
-package pl.coderslab.bets.web;
+package pl.coderslab.bets.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.repository.GameRepository;
 import pl.coderslab.bets.repository.TeamRepository;
 import pl.coderslab.bets.repository.UserRepository;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class MenuController {

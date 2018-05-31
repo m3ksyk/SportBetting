@@ -26,57 +26,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource)
-//                .passwordEncoder(passwordEncoder());
-//    }
-
-    @Bean
-    public SpringDataUserDetailsService customUserDetailsService() {
-        return new SpringDataUserDetailsService();
-    }
-//    @Override
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder());
-//                .withUser("test").password(encoder.encode("test123")).roles("USER");
-//    }
-
-//// my config ////
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        http.authorizeRequests()
-//                .antMatchers("/", "/index").permitAll()
-//                .antMatchers("/register").anonymous()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .usernameParameter("login")
-//                .passwordParameter(encoder.encode("password"))
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/").permitAll()
-//                .and()
-//                .logout().permitAll()
-//                .logoutSuccessUrl("/")
-//                .and().exceptionHandling().accessDeniedPage("/403");
+//    @Bean
+//    public SpringDataUserDetailsService customUserDetailsService() {
+//        return new SpringDataUserDetailsService();
 //    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
-                .antMatchers("/game/**").hasAnyRole("USER")
-                .anyRequest().permitAll()
-                .and().formLogin()
+                .antMatchers("/", "/index", "/login").permitAll()
+                .antMatchers("/register").anonymous()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
                 .loginPage("/login")
-//                .usernameParameter("login")
-//                .passwordParameter(encoder.encode("password"))
                 .defaultSuccessUrl("/").permitAll()
                 .and()
                 .logout().permitAll()
                 .logoutSuccessUrl("/")
                 .and().exceptionHandling().accessDeniedPage("/403");
     }
+
 
 }

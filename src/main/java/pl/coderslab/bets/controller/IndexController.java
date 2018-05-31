@@ -1,9 +1,7 @@
-package pl.coderslab.bets.web;
+package pl.coderslab.bets.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.coderslab.bets.entity.User;
 
 @Controller
 public class IndexController {

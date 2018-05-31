@@ -7,9 +7,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -29,6 +31,11 @@ public class User {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String cryptSalt;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     @OneToMany
     private List<Bet> bets;

@@ -1,4 +1,4 @@
-package pl.coderslab.bets.web;
+package pl.coderslab.bets.controller;
 
 import org.springframework.stereotype.Controller;
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Account details</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<span sec:authorize="isAuthenticated()">
+<!--add check if user is viewing HIS account-->
+
+Logged in as:
+<p>name: <p type="text" th:field="${user.username}" /></p>
+<p>email: <p type="text" th:field="${user.email}" /></p>
+
+Current wallet balance:
+<p> <p type="text" th:field="${user.wallet}" /></p>
+<a class="btn btn-default" th:href="@{/user/recharge/(id=${user.id})}"> charge wallet</a>
+
+<p> <a class="btn btn-default" th:href="@{/user/messages/(id=${user.id})}"> view messages</a></p>
+
+    <!--history of all user bets-->
+<table class="table table-bordered">
+    <tr>
+        <th> game </th>
+        <th> bet on </th>
+        <th> bet amount </th>
+        <th> win </th>
+        <th> amount won </th>
+
+    </tr>
+    <tr th:each="bet, iterStat: ${userBets}" >
+        <td th:text="${bet.game}"></td>
+        <td th:text="${bet.bettingTeam}"></td>
+        <td th:text="${bet.amount}"></td>
+        <td th:text="${bet.win}"></td>
+        <td th:text="${bet.amountWon}"></td>
+        <!-- amountWon calculated in controller and passed to view-->
+    </tr>
+</table>
+</span>
+</body>
+</html>

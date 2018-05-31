@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!--<span sec:authorize="isAuthenticated()">-->
+
+        <!--<p>hello, <span sec:authentication="login"></span></p>-->
+
+        <!--<form th:action="@{/logout}" method="POST">-->
+
+            <!--<input type="submit" value="Wyloguj"/>-->
+
+        <!--</form>-->
+
+    <!--</span>-->
+<span sec:authorize="!isAuthenticated()">
+
+    <!--<a th:href="@{/login/login}" > LOG IN </a><br>-->
+
+    <a class="btn btn-default" href="register"> REGISTER </a> <br>
+<!--th:object="${user}"-->
+        <form th:action="@{/login}"   method="post">
+            <p>username: <input type="text" id="username" name="username"/></p>
+
+            <!--<p>username: <input type="text" th:field="${username}" /></p>-->
+        <p th:each="error : ${#fields.errors('username')}"
+           th:text="${error}">Validation error</p>
+            <p>password: <input type="password" id="password" name="password"/></p>
+
+            <!--<p>Password: <input type="text" th:field="${password}" /></p>-->
+        <p th:each="error : ${#fields.errors('password')}"
+           th:text="${error}">Validation error</p>
+
+    <!--<div>-->
+        <!--<label th:text="#{label.user.username}">username</label>-->
+        <!--<input type="username" th:field="*{username}"/>-->
+        <!--<p th:each="error : ${#fields.errors('username')}"-->
+           <!--th:text="${error}">Validation error</p>-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<label th:text="#{label.user.password}">password</label>-->
+        <!--<input type="password" th:field="*{password}"/>-->
+        <!--<p th:each="error : ${#fields.errors('password')}"-->
+           <!--th:text="${error}">Validation error</p>-->
+    <!--</div>-->
+
+        <p><input type="submit" value="Log in" /></p>
+</form>
+
+</span>
+</body>
+</html>

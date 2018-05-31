@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Scheduled games</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!--view only games where status equals scheduled!-->
+<table class="table table-bordered">
+
+    <tr>
+        <th> sport </th>
+        <th> league </th>
+        <th> team1 </th>
+        <th> team2 </th>
+        <th> start </th>
+        <th> end </th>
+        <th> odds </th>
+        <th> place a bet </th>
+
+    </tr>
+    <tr th:each="game, iterStat: ${scheduledGames}" >
+        <td th:text="${game.sport}"></td>
+        <td th:text="${game.league}"></td>
+        <td th:text="${game.start}"></td>
+        <td th:text="${game.end}"></td>
+        <td th:text="${game.homeTeam.name}"></td>
+        <td th:text="${game.awayTeam.name}"></td>
+        <td th:text="${game.homeTeam.odd} ' : ' ${game.awayTeam.odd}"></td>
+        <td><a href="/game/bet/${game.id}"> bet </a> </td>
+        <!--<td> <a th:href="@{/game/bet(id=${game.id})}">bet</a> </td>-->
+    </tr>
+</table>
+
+
+</body>
+</html>

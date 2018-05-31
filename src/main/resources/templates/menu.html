@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<span><a class="btn btn-default" href="/menu/view"> games </a> </span>
+<span><a class="btn btn-default" href="/menu/live"> live </a> </span>
+<span><a  class="btn btn-default" href="/menu/results"> results </a> </span>
+<span><a  class="btn btn-default" href="/menu/standings"> standings </a> </span>
+
+<span sec:authorize="isAuthenticated()">
+
+<!--<span><a class="btn btn-default" href="/menu/viewbets(id=${user.id})"> my bets </a> </span>-->
+    <!--current user bets-->
+<!--<span><a class="btn btn-default" href="/menu/viewaccount(id=${user.id})"> account </a> </span>-->
+
+</span>
+
+</body>
+</html>

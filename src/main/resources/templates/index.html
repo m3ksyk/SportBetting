@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>BetIt</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
+    <!--<link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css" />-->
+</head>
+<body>
+<div class="alert alert-success" th:insert="login">
+    Login Component
+</div>
+<!--<div th:style="class='container'" th:insert="menu">-->
+<div class="alert alert-success" th:insert="menu">
+    Menu Component
+</div>
+<!--<div th:style="class='container'" th:insert="live">-->
+<!--Live games Component-->
+<!--</div>-->
+<div class="alert alert-success" >
+    dummy test div
+</div>
+
+</body>
+</html>

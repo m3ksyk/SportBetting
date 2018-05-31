@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+Welcome!
+Please provide your data:
+    <!--th:object="${user}"-->
+<form th:action="@{/register}"  method="post">
+    <!--<p th:if="${#fields.hasErrors('user')}" th:errors="*{user}">  </p>-->
+dodac obsluge bledow
+    <p>username: <input type="text" th:field="${username}" /></p>
+    <p th:each="error : ${#fields.errors('username')}"
+       th:text="${error}">Validation error</p>
+    <p>email: <input type="text" th:field="${email}" /></p>
+    <p th:each="error : ${#fields.errors('email')}"
+       th:text="${error}">Validation error</p>
+    <p>password: <input type="text" th:field="${password}" /></p>
+    <p th:each="error : ${#fields.errors('password')}"
+       th:text="${error}">Validation error</p>
+    <p>credit card: <input type="text" th:field="${creditCardNum}" /></p>
+    <p th:each="error : ${#fields.errors('creditCardNum')}"
+       th:text="${error}">Validation error</p>
+
+    <p><input type="submit" value="Submit" /></p>
+
+    Disclaimer: All new users get FREE 10 credits for bets. ENJOY. IT'S ON THE HOUSE.
+</form>
+</div>
+</body>
+</html>

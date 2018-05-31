@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!--view only games where status equals finished!-->
+<table class="table table-bordered">
+
+    <tr>
+        <th> sport </th>
+        <th> league </th>
+        <th> team1 </th>
+        <th> team2 </th>
+        <th> start </th>
+        <th> end </th>
+        <th> result </th>
+
+    </tr>
+    <tr th:each="game, iterStat: ${gameResults}" >
+        <td th:text="${game.sport}"></td>
+        <td th:text="${game.league}"></td>
+        <td th:text="${game.start}"></td>
+        <td th:text="${game.end}"></td>
+        <td th:text="${game.homeTeam.name}"></td>
+        <td th:text="${game.awayTeam.name}"></td>
+        <td th:text="${game.homeTeam.homeTeamScore} ' : ' ${game.awayTeamScore}"></td>
+
+    </tr>
+</table>
+</body>
+</html>

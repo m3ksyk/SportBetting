@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>recharge</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<span sec:authorize="isAuthenticated()">
+
+<form th:action="@{/user/recharge}" th:object="${user}" method="post">
+    <p th:if="${#fields.hasErrors('user')}" th:errors="*{user}">  </p>
+
+    <p>amount: <input type="text" th:field="*{amount}" /> amount </p>
+    <p>credit card number: <input type="text" th:field="*{creditCardNum}" /> credCardNum </p>
+
+    <p><input type="submit" value="Charge" /></p>
+</form>
+</span>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Standings</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<table class="table table-bordered">
+<tr>
+    <th> standing </th>
+    <th> sport </th>
+    <th> league </th>
+    <th> name </th>
+    <th> wins </th>
+    <th> losses </th>
+    <th> draws </th>
+
+</tr>
+<tr th:each="team, iterStat: ${standings}" >
+    <td th:text="${iterStat.count}"></td>
+    <td th:text="${team.sport}"></td>
+    <td th:text="${team.league}"></td>
+    <td th:text="${team.name}"></td>
+    <td th:text="${team.gamesWon}"></td>
+    <td th:text="${team.gamesLost}"></td>
+    <td th:text="${team.draws}"></td>
+
+</tr>
+</table>
+</body>
+</html>

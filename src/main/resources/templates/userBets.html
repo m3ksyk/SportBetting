@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title> my current bets</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<span sec:authorize="isAuthenticated()">
+
+<!--view current user bets here (bets where game status is not "finished")-->
+
+<table class="table table-bordered">
+    <tr>
+        <th> game </th>
+        <th> bet on </th>
+        <th> bet amount </th>
+        <th> rate </th>
+        <th> possible win </th>
+
+    </tr>
+    <tr th:each="bet, iterStat: ${userBets}" >
+        <td th:text="${bet.game}"></td>
+        <td th:text="${bet.bettingTeam}"></td>
+        <td th:text="${bet.amount}"></td>
+        <td th:text="${bet.rate}"></td>
+        <td th:text="${possibleWin}"></td>
+        <!--possible win calculated in controller and passed to view-->
+    </tr>
+</table>
+</span>
+</body>
+</html>

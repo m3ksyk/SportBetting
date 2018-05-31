@@ -100,8 +100,15 @@ public class ScheduledTasksService {
             while (id1 == id2){
                 id2 = random.nextInt(teams.size());
             }
-            game.setHomeTeam(teams.get(id1));
-            game.setAwayTeam(teams.get(id2));
+            Team home = teams.get(id1);
+            Team away = teams.get(id2);
+
+            game.setHomeTeam(home);
+            game.setAwayTeam(away);
+
+            home.setInGame(true);
+            away.setInGame(true);
+
             teams.remove(id1);
             teams.remove(id2);
 
@@ -136,6 +143,8 @@ public class ScheduledTasksService {
 
         for (Game g: ending) {
             g.setStatus("finished");
+            g.getHomeTeam().setInGame(false);
+            g.getAwayTeam().setInGame(false);
             gameService.save(g);
         }
     }

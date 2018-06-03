@@ -11,10 +11,7 @@ import pl.coderslab.bets.service.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -48,30 +45,20 @@ public class ScheduledTasksService {
 
     //for now we only have one sport : football, other sports may be added if functionalities are working
     public void createSports(){
-    //METODA WYWALA NULL...
-//        List<Sport> checkList = sportService.findAllSports();
-//        if(checkList.isEmpty()) {
-//        if(sportService.findAllSports() == null){
             Sport football = new Sport();
             football.setName("Football");
             sportService.save(football);
-//        }
     }
 
     //for now we only have one league for one sport, more may be added later if funcs work correctly
     public void createLeagues() {
-//        List<League> checkList = leagueService.findAllLeagues();
-//        if (checkList.isEmpty()) {
             League footballLeague1 = new League();
             footballLeague1.setName("First Football League of Fakerstan");
             footballLeague1.setSport(sportService.findSportByName("football"));
             leagueService.save(footballLeague1);
-//        }
     }
     //for now 20 teams in one league of one sport
     public void createTeams(){
-//        List<Team> checkList = teamService.findAllTeams();
-//        if (checkList.isEmpty()) {
             Faker faker = new Faker();
             for (int i = 0; i < 20; i++) {
                 Team team = new Team();
@@ -80,7 +67,6 @@ public class ScheduledTasksService {
                 team.setLeague(leagueService.findLeagueByName("First Football League of Fakerstan"));
                 teamService.save(team);
             }
-//        }
     }
 
     //generating 5 new games every 5 minutes
@@ -214,13 +200,16 @@ public class ScheduledTasksService {
                     gameService.save(g);
         }
     }
-
+    //sorts teams table standing by scored goals
     @Scheduled(cron = "* 0/2 * * * ?")
     public void StandingsCheck(){
         List<Team> teams = teamService.findAllTeams();
-
+        teams.sort((t1, t2) -> t1.getGoalsScored() - t2.getGoalsScored());
+        int counter = 1;
         for (Team t : teams) {
-            //TODO sort teams by standing
+            t.setTableStanding(counter);
+            counter++;
+            teamService.save(t);
         }
     }
 
@@ -236,7 +225,6 @@ public class ScheduledTasksService {
         b.setPaidOut(true);
         userService.save(user);
         betService.save(b);
-
     }
 
 }

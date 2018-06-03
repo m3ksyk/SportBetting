@@ -3,11 +3,12 @@ package pl.coderslab.bets.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.Set;
 
 @Data
 @Entity
-public class Team {
+public class Team{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -38,5 +39,4 @@ public class Team {
     //flag to check if team is currently in-game
     private boolean inGame;
 }
-//check how table standing is calculated
 

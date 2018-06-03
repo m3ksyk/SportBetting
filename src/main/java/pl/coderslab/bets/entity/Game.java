@@ -1,6 +1,7 @@
 package pl.coderslab.bets.entity;
 
 import lombok.Data;
+import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
 import java.sql.Time;
@@ -16,21 +17,22 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn   //spr czy nie zakrzaczy
     private Sport sport;
 
     private Timestamp start;
     private Timestamp end;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Team homeTeam;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn
     private Team awayTeam;
 
-    @OneToOne
+    @ManyToOne
     private Team winner;
 
     private boolean drawn;
@@ -53,7 +55,7 @@ public class Game {
 
     private boolean betsPaidOut;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn
     private List<Bet> bets;
 }

@@ -1,4 +1,4 @@
-package pl.coderslab.bets;
+package pl.coderslab.bets.service.api;
 
 import org.json.JSONException;
 import org.json.JSONObject;

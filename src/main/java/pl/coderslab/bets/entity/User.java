@@ -1,6 +1,7 @@
 package pl.coderslab.bets.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
@@ -37,7 +38,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Bet> bets;
 
     private String creditCardNum;
@@ -45,10 +46,10 @@ public class User {
     @NotNull
     private BigDecimal wallet;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private BettingGroup bettingGroup;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Message> messages;
     //add subscriptions and favs if other funcs are go
 
@@ -59,4 +60,8 @@ public class User {
 //    public void setPassword(String password) {
 //        this.password = BCrypt.hashpw(password, cryptSalt);
 //    }
+
+    public String toString() {
+        return this.getUsername();
+    }
 }

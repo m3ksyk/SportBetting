@@ -3,6 +3,7 @@ package pl.coderslab.bets.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.bets.entity.Role;
 import pl.coderslab.bets.entity.User;
@@ -19,15 +20,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private final UserRepository userRepository;
     @Autowired
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     @Autowired
     private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
                            RoleRepository roleRepository) {
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;        this.roleRepository = roleRepository;
     }
 
     @Override

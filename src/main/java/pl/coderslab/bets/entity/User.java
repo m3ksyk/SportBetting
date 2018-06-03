@@ -30,9 +30,6 @@ public class User {
     @NotNull
     private String password;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String cryptSalt;
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -51,15 +48,6 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Message> messages;
-    //add subscriptions and favs if other funcs are go
-
-//    public void setCryptSalt(String cryptSalt) {
-//        this.cryptSalt = BCrypt.gensalt();
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = BCrypt.hashpw(password, cryptSalt);
-//    }
 
     public String toString() {
         return this.getUsername();

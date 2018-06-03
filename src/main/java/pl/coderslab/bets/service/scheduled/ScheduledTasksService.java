@@ -127,8 +127,8 @@ public class ScheduledTasksService {
             gameService.save(game);
         }
     }
-    //checks every minute for games going live or finishing
-    @Scheduled(cron = "0 0/1 * 1/1 * ?")
+    //checks every second for games going live or finishing
+    @Scheduled(cron = "1/1 1/1 * 1/1 * ?")
     public void gameStatusCheck(){
 
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
@@ -181,22 +181,22 @@ public class ScheduledTasksService {
         List<Game> liveGames = gameService.findGamesByStatus("live");
         Random random = new Random();
         for (Game g : liveGames) {
-            g.setAwayTeamScore(g.getAwayTeamScore() + random.nextInt(1));
-            g.setHomeTeamScore(g.getAwayTeamScore() + random.nextInt(1));
+            g.setAwayTeamScore(g.getAwayTeamScore() + random.nextInt(2));
+            g.setHomeTeamScore(g.getAwayTeamScore() + random.nextInt(2));
             gameService.save(g);
         }
     }
 
     //finds bets not paid out
-    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "1/1 * * * * ?")
     public void gamesPayout(){
-        List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");
+//        List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");
 
-        for (Game g : finishedGames) {
+//        for (Game g : finishedGames) {
             //TODO bets calculating and paying out here
 
 //            gameService.save(g);
-        }
+//        }
     }
 
 }

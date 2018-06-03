@@ -138,6 +138,13 @@
             <artifactId>jquery</artifactId>
             <version>1.9.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.15.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>

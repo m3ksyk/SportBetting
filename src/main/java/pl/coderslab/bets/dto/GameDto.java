@@ -18,8 +18,8 @@ public class GameDto {
     private long id;
     @JsonProperty("sport_name")
     private String sportName;
-//    @JsonProperty("league_name")
-//    private String leagueName;
+    @JsonProperty("league_name")
+    private String leagueName;
     @JsonProperty("match_start")
     private String start;
     @JsonProperty("match_end")

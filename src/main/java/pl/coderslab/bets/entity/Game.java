@@ -38,9 +38,15 @@ public class Game {
 
     private int awayTeamScore;
 
-    private int homeTeamOdd;
+    private int homeTeamWinOdd;
 
-    private int awayTeamOdd;
+    private int homeTeamWinOrDrawOdd;
+
+    private int awayTeamWinOdd;
+
+    private int awayTeamWinOrDrawOdd;
+
+    private int DrawOdd;
 
     private String status;
 

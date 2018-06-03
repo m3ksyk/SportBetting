@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>place bet</title>
@@ -9,27 +9,27 @@
 <body>
 <span sec:authorize="isAuthenticated()">
 
-jesli uzytkownik nie zalogowany przekierowac na login
-
 <div> Place a bet on:
 <span th:text="${game.homeTeam.name}">team1</span>
  vs.
 <span th:text="${game.awayTeam.name}">team2</span>
 Odds:
-<span th:text="${game.homeTeam.odd} ' : ' ${game.awayTeam.odd}"> odds</span>
+<span th:text="${game.homeTeamWinOdd} ' : ' ${game.homeTeamWinOrDrawOdd}' : ' ${game.DrawOdd}
+                ' : ' ${game.awayTeamWinOrDrawOdd} ' : ' ${game.awayTeamWinOdd}"> odds</span>
 </div>
 <div>
 Your bet:
 <form th:action="@{/game/bet}" th:object="${bet}" method="post">
     <p th:if="${#fields.hasErrors('bet')}" th:errors="*{bet}">  </p>
 
-    <p>amount: <input type="text" th:field="*{amount}" /> amount </p>
-    <p>team: <select th:field="{bet.bettingTeam}" th:remove="all-but-first">
+    <p>amount: <input type="text" th:field="*{amount}"/> amount </p>
+    <p>team: <select th:field="${bet.bettingTeam}" th:remove="all-but-first">
         <option th:field="${game.homeTeam.name}"> team1 </option>
         <option th:field="${game.awayTeam.name}"> team2 </option>
     </select></p>
+    <p>draw:     <input type="checkbox" name="draw" th:value="${bet.willDraw}"/></p>
 
-    <p><input type="submit" value="Submit" /></p>
+    <p><input type="submit" value="Submit"/></p>
 </form>
 </div>
 </span>

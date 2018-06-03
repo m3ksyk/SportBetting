@@ -36,7 +36,6 @@ public class ScheduledTasksService {
     BetService betService;
 
 //    ScheduledTasksService() {
-        //odkomentowac jak zacznie dzialac
 
 //        this.regenerateGames();
 //        this.gameStatusCheck();
@@ -184,17 +183,22 @@ public class ScheduledTasksService {
             Team winner = g.getWinner();
             Boolean draw = g.isDrawn();
             for (Bet b : bets) {
-                if(winner.equals(b.getBettingTeam())){
+                if(winner.equals(b.getBettingTeam()) && draw == false){
+                    //betting team won
                     payoutSingleBet(b);
-                }else if(b.isWillDraw() && draw ==true){
+                }else if(b.isWillDraw() && draw ==true && winner.equals(b.getBettingTeam())){
+                    //betting team won or drew
+                    payoutSingleBet(b);
+                }else if(b.isWillDraw() && draw ==true && winner == null){
+                    //there was a draw
                     payoutSingleBet(b);
                 } else{
+                    //betting team neither won nor drew
                     b.setWin(false);
                     b.setPaidOut(true);
                     b.setAmountWon(BigDecimal.valueOf(0));
                     betService.save(b);
                 }
-
             }
             g.setBetsPaidOut(true);
                     gameService.save(g);

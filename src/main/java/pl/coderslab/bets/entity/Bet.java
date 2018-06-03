@@ -30,21 +30,14 @@ public class Bet {
     private Team bettingTeam;
     //change to string?
 
+    private boolean willDraw;
+
     private boolean win;
 
     private boolean groupBet;
 
     private BigDecimal amountWon;
 
-    private BigDecimal calculateWonAmount(BigDecimal amount, BigDecimal rate, boolean win){
-        if (win){
-            return amount.multiply(rate);
-        }else{
-            return BigDecimal.valueOf(0);
-        }
-    }
-
     private boolean paidOut;
-
 
 }

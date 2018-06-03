@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Scheduled games</title>
@@ -27,12 +27,14 @@
         <td th:text="${game.end}"></td>
         <td th:text="${game.homeTeam.name}"></td>
         <td th:text="${game.awayTeam.name}"></td>
-        <td th:text="${game.homeTeam.odd} ' : ' ${game.awayTeam.odd}"></td>
-        <td><a href="/game/bet/${game.id}"> bet </a> </td>
-        <!--<td> <a th:href="@{/game/bet(id=${game.id})}">bet</a> </td>-->
+        <td th:text="${game.homeTeamWinOdd} ' : ' ${homeTeamWinOrDrawOdd} ' : ' ${game.DrawOdd} ' : '
+        ${game.awayTeamWinOrDrawOdd} ' : ' ${game.awayTeamWinOdd}" ></td>
+        <span sec:authorize="isAuthenticated()">
+            <td><a href="/game/bet/${game.id}"> bet </a> </td>
+            <!--<td> <a th:href="@{/game/bet(id=${game.id})}">bet</a> </td>-->
+        </span>
     </tr>
 </table>
-
 
 </body>
 </html>

@@ -7,18 +7,11 @@
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<span sec:authorize="isAuthenticated()">
+
+<p> Hello! </p>
+    </span>
 <!--<span sec:authorize="isAuthenticated()">-->
-
-        <!--<p>hello, <span sec:authentication="login"></span></p>-->
-
-        <!--<form th:action="@{/logout}" method="POST">-->
-
-            <!--<input type="submit" value="Wyloguj"/>-->
-
-        <!--</form>-->
-
-    <!--</span>-->
-<!--<span sec:authorize="!isAuthenticated()">-->
 
     <a class="btn btn-default" href="register"> REGISTER </a> <br>
         <form th:action="@{/login}"   method="post">

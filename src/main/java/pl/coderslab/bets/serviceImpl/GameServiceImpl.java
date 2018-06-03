@@ -20,6 +20,12 @@ public class GameServiceImpl implements GameService {
         gameRepository.save(game);
     }
 
+
+    @Override
+    public Game findById(Long id) {
+        return gameRepository.getOne(id);
+    }
+
     @Override
     public List<Game> findGamesStarting(Timestamp timestamp, String status) {
         return gameRepository.findAllByStartAfterAndStatusEquals(timestamp, status);
@@ -39,4 +45,5 @@ public class GameServiceImpl implements GameService {
     public List<Game> findFinishedGamesNotPaidOut(String status) {
         return gameRepository.findAllByStatusEqualsAndBetsPaidOutFalse(status);
     }
+
 }

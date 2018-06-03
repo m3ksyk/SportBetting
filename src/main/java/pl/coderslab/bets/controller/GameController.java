@@ -20,4 +20,9 @@ public class GameController {
         scheduledTasksService.createTeams();
         return "DONE";
     }
+
+    @GetMapping("/game/placebet")
+    public String placeBet(){
+        return null;
+    }
 }

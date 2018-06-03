@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -52,4 +53,7 @@ public class Game {
 
     private boolean betsPaidOut;
 
+    @ManyToOne
+    @JoinColumn
+    private List<Bet> bets;
 }

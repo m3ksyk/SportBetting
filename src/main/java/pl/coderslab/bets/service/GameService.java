@@ -14,4 +14,6 @@ public interface GameService {
     List<Game> findGamesByStatus(String status);
 
     List<Game> findFinishedGamesNotPaidOut(String status);
+
+    Game findById(Long id);
 }

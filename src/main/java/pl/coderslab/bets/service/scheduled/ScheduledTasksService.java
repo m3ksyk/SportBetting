@@ -5,15 +5,10 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import pl.coderslab.bets.entity.Game;
-import pl.coderslab.bets.entity.League;
-import pl.coderslab.bets.entity.Sport;
-import pl.coderslab.bets.entity.Team;
-import pl.coderslab.bets.service.GameService;
-import pl.coderslab.bets.service.LeagueService;
-import pl.coderslab.bets.service.SportService;
-import pl.coderslab.bets.service.TeamService;
+import pl.coderslab.bets.entity.*;
+import pl.coderslab.bets.service.*;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -37,13 +32,19 @@ public class ScheduledTasksService {
     @Autowired
     GameService gameService;
 
-    ScheduledTasksService() {
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    BetService betService;
+
+//    ScheduledTasksService() {
         //odkomentowac jak zacznie dzialac
 
 //        this.regenerateGames();
 //        this.gameStatusCheck();
 //        this.resultRigger();
-    }
+//    }
 
     //for now we only have one sport : football, other sports may be added if functionalities are working
     public void createSports(){
@@ -192,12 +193,50 @@ public class ScheduledTasksService {
     @Scheduled(cron = "0/1 * * * * ?")
     public void gamesPayout(){
         List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");
+     for (Game g : finishedGames) {
+            List<Bet> bets = g.getBets();
+            Team winner = g.getWinner();
+            Boolean draw = g.isDrawn();
+            for (Bet b : bets) {
+                if(winner.equals(b.getBettingTeam())){
+                    payoutSingleBet(b);
+                }else if(b.isWillDraw() && draw ==true){
+                    payoutSingleBet(b);
+                } else{
+                    b.setWin(false);
+                    b.setPaidOut(true);
+                    b.setAmountWon(BigDecimal.valueOf(0));
+                    betService.save(b);
+                }
 
-        for (Game g : finishedGames) {
-            //TODO bets calculating and paying out here
-
-//            gameService.save(g);
+            }
+            g.setBetsPaidOut(true);
+                    gameService.save(g);
         }
+    }
+
+    @Scheduled(cron = "* 0/2 * * * ?")
+    public void StandingsCheck(){
+        List<Team> teams = teamService.findAllTeams();
+
+        for (Team t : teams) {
+            //TODO sort teams by standing
+        }
+    }
+
+    public void payoutSingleBet(Bet b){
+        b.setWin(true);
+        BigDecimal amount = b.getAmount();
+        BigDecimal rate = b.getRate();
+        BigDecimal amountWon = amount.multiply(rate);
+        b.setAmountWon(amountWon);
+        User user = b.getUser();
+        BigDecimal current = user.getWallet();
+        user.setWallet(current.add(amountWon));
+        b.setPaidOut(true);
+        userService.save(user);
+        betService.save(b);
+
     }
 
 }

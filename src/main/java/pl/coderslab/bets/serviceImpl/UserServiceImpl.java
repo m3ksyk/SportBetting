@@ -27,7 +27,8 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
                            RoleRepository roleRepository) {
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -38,12 +39,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user) {
 
-//        user.setCryptSalt(BCrypt.gensalt());
-//        user.setPassword(BCrypt.hashpw(user.getPassword(), user.getCryptSalt()));
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role userRole = roleRepository.findByName("ROLE_USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void save(User user) {
         userRepository.save(user);
     }
 }

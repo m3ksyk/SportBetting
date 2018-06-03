@@ -51,4 +51,25 @@ public class UserController {
         model.addAttribute("loginError", true);
         return "login.html";
     }
+
+    @GetMapping("/user/recharge")
+    public String recharge(WebRequest request, Model model){
+        //get current user add to model
+
+        return "recharge";
+    }
+
+    @PostMapping("/user/recharge")
+    public String recharge(@ModelAttribute User user, @ModelAttribute BigDecimal amount, BindingResult result){
+        if(result.hasErrors()){
+            return "recharge";
+        }
+
+        BigDecimal current = user.getWallet();
+        BigDecimal res = current.add(amount);
+        user.setWallet(res);
+
+        userService.saveUser(user);
+        return "recharge";
+    }
 }

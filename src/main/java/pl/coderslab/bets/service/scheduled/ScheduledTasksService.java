@@ -39,9 +39,7 @@ public class ScheduledTasksService {
 
     ScheduledTasksService() {
         //odkomentowac jak zacznie dzialac
-//        this.createSports();
-//        this.createLeagues();
-//        this.createTeams();
+
 //        this.regenerateGames();
 //        this.gameStatusCheck();
 //        this.resultRigger();
@@ -127,8 +125,8 @@ public class ScheduledTasksService {
             gameService.save(game);
         }
     }
-    //checks every second for games going live or finishing
-    @Scheduled(cron = "1/1 1/1 * 1/1 * ?")
+    //checks every minute for games going live or finishing
+    @Scheduled(cron = "0 0/1 * 1/1 * ?")
     public void gameStatusCheck(){
 
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
@@ -188,15 +186,15 @@ public class ScheduledTasksService {
     }
 
     //finds bets not paid out
-    @Scheduled(cron = "1/1 * * * * ?")
+    @Scheduled(cron = "0/1 * * * * ?")
     public void gamesPayout(){
-//        List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");
+        List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");
 
-//        for (Game g : finishedGames) {
+        for (Game g : finishedGames) {
             //TODO bets calculating and paying out here
 
 //            gameService.save(g);
-//        }
+        }
     }
 
 }

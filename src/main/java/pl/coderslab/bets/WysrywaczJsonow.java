@@ -1,18 +1,21 @@
 package pl.coderslab.bets;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class WysrywaczJsonow {
 
-//    private ArrayList<JSONObject> todayGames = new ArrayList<>();
+//    private ArrayList<JSONObject> liveGames = new ArrayList<>();
 //    private ArrayList<JSONObject> leagues = new ArrayList<>();
-//    private ArrayList<JSONObject> currentGames = new ArrayList<>();
+//    private ArrayList<JSONObject> scheduledGames = new ArrayList<>();
 //    private ArrayList<JSONObject> sports = new ArrayList<>();
-//    private ArrayList<JSONObject> users = new ArrayList<>();
+//    private ArrayList<JSONObject> teams = new ArrayList<>();
 
-//
-//    @Scheduled(cron = "0 0/5 * 1/1 * ?")
-//    public void regenerateCurrent() throws JSONException {
-//        scheduled faker = new scheduled();
-//        currentGames.clear();
+//    public void generateCurrent() throws JSONException {
+        //pobrac liste live games  z bazy
+        //for eachem napchać jsony
+        //zwrocic jsony
 //        for (int i = 0; i < 10; i++) {
 //            JSONObject jsonObject = new JSONObject();
 //            jsonObject.put("firstTeam", faker.team().name());
@@ -25,25 +28,11 @@ public class WysrywaczJsonow {
 //        }
 //    }
 
-//    public void generateUsers() throws JSONException{
-//        scheduled faker = new scheduled();
-//        users.clear();
-//        for (int i = 0; i < 10; i++) {
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("id", faker.number().randomNumber(8, true));
-//            jsonObject.put("userName", faker.name().firstName() + faker.name().lastName());
-//            jsonObject.put("password", faker.crypto().sha256());
-//            jsonObject.put("email" , faker.internet().emailAddress());
-//
-//            users.add(jsonObject);
-//        }
-//    }
-
-//    public ArrayList<JSONObject> getTodayGames() {
+//    public ArrayList<JSONObject> getScheduledGames() {
 //        return todayGames;
 //    }
 //
-//    public ArrayList<JSONObject> getCurrentGames() {
+//    public ArrayList<JSONObject> getLiveGames() {
 //        return currentGames;
 //    }
 //
@@ -51,10 +40,10 @@ public class WysrywaczJsonow {
 //        return leagues;
 //    }
 //
-//    public ArrayList<JSONObject> getUsers() {
-//        return users;
-//    }
 //    public ArrayList<JSONObject> getSports() {
 //        return sports;
 //    }
+//public ArrayList<JSONObject> getTeams() {
+//        return teams;
+//  }
 }

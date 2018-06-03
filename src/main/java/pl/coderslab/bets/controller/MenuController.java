@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.coderslab.bets.repository.GameRepository;
 import pl.coderslab.bets.repository.TeamRepository;
-import pl.coderslab.bets.repository.UserRepository;
+import pl.coderslab.bets.service.UserService;
 
 @Controller
 public class MenuController {
@@ -19,7 +19,7 @@ public class MenuController {
     TeamRepository teamRepository;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
 
     //if method works add tables and controllers for different sports
@@ -46,18 +46,19 @@ public class MenuController {
         model.addAttribute("standings", teamRepository.findAllOrderByTableStandingDesc());
         return "standings";
     }
+
 //<a th:href="@{/game/bet(id=${game.id})}">bet</a>
     //maybe get current user from session
 //    @GetMapping("/menu/viewbets(id=${user.id})")
 //    public String viewUsersCurrentBets(HttpSession session, Model model, @RequestParam long id){
 ////        session.
-//        model.addAttribute("user", userRepository.findById(id));
+//        model.addAttribute("user", userService.findById(id));
 //        return "userBets";
 //    }
 //    //maybe get current user from session
 //    @GetMapping("/menu/viewaccount(id=${user.id})")
 //    public String viewUserAccount(Model model, @RequestParam long id){
-//        model.addAttribute("user", userRepository.findById(id));
+//        model.addAttribute("user", userService.findById(id));
 //        return "account";
 //    }
 

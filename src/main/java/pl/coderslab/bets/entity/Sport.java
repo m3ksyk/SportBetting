@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Set;
 
-
 @Data
 @Entity
 public class Sport {
@@ -24,4 +23,9 @@ public class Sport {
     @OneToMany
     @JoinColumn
     private Set<Team> teams;
+
+    @Override
+    public String toString() {
+        return  name;
+    }
 }

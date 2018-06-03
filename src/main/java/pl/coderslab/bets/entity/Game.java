@@ -24,15 +24,16 @@ public class Game {
     private Timestamp start;
     private Timestamp end;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Team homeTeam;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Team awayTeam;
 
-    @ManyToOne
+    @OneToOne
+    @JoinColumn
     private Team winner;
 
     private boolean drawn;
@@ -55,7 +56,7 @@ public class Game {
 
     private boolean betsPaidOut;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn
     private List<Bet> bets;
 }

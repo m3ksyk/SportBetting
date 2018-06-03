@@ -72,7 +72,6 @@ public class ScheduledTasksService {
     @Scheduled(cron = "0 0/5 * 1/1 * ?")
     public void regenerateGames() {
         Faker faker = new Faker();
-        Calendar calendar = Calendar.getInstance();
         Random random = new Random();
         List<Team> teams = teamService.findAllAvailableTeams();
 
@@ -104,8 +103,10 @@ public class ScheduledTasksService {
             game.setHomeTeamWinOrDrawOdd(faker.number().randomDouble(2,1,5));
 
             //setting start and end date for the games
-            Timestamp startDate= (Timestamp) new Date(System.currentTimeMillis() + 5 *60*1000);
-            Timestamp endDate= (Timestamp) new Date(System.currentTimeMillis() + 10 *60*1000);
+//            Timestamp = (Timestamp) new Date(System.currentTimeMillis() + 5 *60*1000);
+            Timestamp startDate= Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
+//            Timestamp endDate= (Timestamp) new Date(System.currentTimeMillis() + 10 *60*1000);
+            Timestamp endDate= Timestamp.valueOf(LocalDateTime.now().plusMinutes(10));
 
             game.setStart(startDate);
             game.setEnd(endDate);

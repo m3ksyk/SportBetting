@@ -34,6 +34,7 @@ public class BetController {
         if(result.hasErrors()){
             return "placeBet";
         }
+        //set rate somewhere here!!
         betService.save(bet);
         return "redirect:/index";
     }

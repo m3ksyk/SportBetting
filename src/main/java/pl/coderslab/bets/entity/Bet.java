@@ -13,11 +13,11 @@ public class Bet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private User user; //user making the bet
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Game game; //the game bet is made on
 
@@ -25,7 +25,7 @@ public class Bet {
 
     private BigDecimal rate; //rate is gotten from game team odd
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Team bettingTeam;
     //change to string?

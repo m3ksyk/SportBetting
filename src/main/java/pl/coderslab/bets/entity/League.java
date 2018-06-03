@@ -24,4 +24,8 @@ public class League {
     @JoinColumn
     private Sport sport;
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

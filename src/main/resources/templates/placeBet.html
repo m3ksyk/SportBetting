@@ -18,6 +18,7 @@ Odds:
                 ' : ' ${game.awayTeamWinOrDrawOdd} ' : ' ${game.awayTeamWinOdd}"> odds</span>
 </div>
 <div>
+    przerobic na zespół czekboxow i przekazywac w ten sposob rate
 Your bet:
 <form th:action="@{/game/bet}" th:object="${bet}" method="post">
     <p th:if="${#fields.hasErrors('bet')}" th:errors="*{bet}">  </p>

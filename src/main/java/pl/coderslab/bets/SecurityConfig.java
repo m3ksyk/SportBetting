@@ -48,10 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/").permitAll()
+                .defaultSuccessUrl("/index").permitAll()
                 .and()
                 .logout().permitAll()
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/index")
                 .and().exceptionHandling().accessDeniedPage("/403");
     }
 

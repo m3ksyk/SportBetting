@@ -6,45 +6,49 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.coderslab.bets.repository.GameRepository;
 import pl.coderslab.bets.repository.TeamRepository;
+import pl.coderslab.bets.service.GameService;
+import pl.coderslab.bets.service.TeamService;
 import pl.coderslab.bets.service.UserService;
 
 @Controller
 public class MenuController {
 
     @Autowired
-    GameRepository gameRepository;
-
+    GameService gameService;
 
     @Autowired
-    TeamRepository teamRepository;
+    TeamService teamService;
 
     @Autowired
     UserService userService;
 
-
-    //if method works add tables and controllers for different sports
     @GetMapping("/menu/view")
     public String viewGames(Model model){
-        model.addAttribute("scheduledGames", gameRepository.findAllByStatusEquals("scheduled"));
+        model.addAttribute("scheduledGames", gameService.findGamesByStatus("scheduled"));
         return "games";
     }
 
     @GetMapping("/menu/live")
     public String viewLiveGames(Model model){
-        model.addAttribute("liveGames", gameRepository.findAllByStatusEquals("live"));
+        model.addAttribute("liveGames", gameService.findGamesByStatus("live"));
         return "live";
     }
 
     @GetMapping("/menu/results")
     public String viewResults(Model model){
-        model.addAttribute("results", gameRepository.findAllByStatusEquals("finished"));
+        model.addAttribute("results", gameService.findGamesByStatus("finished"));
         return "results";
     }
 
     @GetMapping("/menu/standings")
     public String viewStandings(Model model){
-        model.addAttribute("standings", teamRepository.findAllOrderByTableStandingDesc());
+        model.addAttribute("standings", teamService.findAllTeamsSortedByStanding());
         return "standings";
+    }
+
+    @GetMapping("/menu/api")
+    public String viewApi(){
+        return "api";
     }
 
 //<a th:href="@{/game/bet(id=${game.id})}">bet</a>

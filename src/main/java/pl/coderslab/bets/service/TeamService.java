@@ -10,4 +10,6 @@ public interface TeamService {
     List<Team> findAllTeams();
 
     List<Team> findAllAvailableTeams();
+
+    List<Team> findAllTeamsSortedByStanding();
 }

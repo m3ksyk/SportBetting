@@ -38,9 +38,6 @@ public class UserController {
         }
         user.setWallet(BigDecimal.valueOf(10));
 
-//        user.setCryptSalt(BCrypt.gensalt());
-//        user.setPassword(BCrypt.hashpw(user.getPassword(), user.getCryptSalt()));
-//        userRepository.save(user);
         userService.saveUser(user);
         return "redirect:/";
     }

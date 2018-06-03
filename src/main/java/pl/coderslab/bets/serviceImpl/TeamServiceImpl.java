@@ -29,4 +29,9 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.findAllByInGameFalse();
     }
 
+    @Override
+    public List<Team> findAllTeamsSortedByStanding() {
+        return teamRepository.findAllOrderByTableStandingDesc();
+    }
+
 }

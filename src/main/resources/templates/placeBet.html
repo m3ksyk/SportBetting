@@ -10,12 +10,17 @@
 <span sec:authorize="isAuthenticated()">
 
 <div> Place a bet on:
-<span th:text="${game.homeTeam.name}">team1</span>
+<p><span th:text="${game.homeTeam.name}">team1</span>
  vs.
 <span th:text="${game.awayTeam.name}">team2</span>
-Odds:
-<span th:text="${game.homeTeamWinOdd} ' : ' ${game.homeTeamWinOrDrawOdd}' : ' ${game.DrawOdd}
-                ' : ' ${game.awayTeamWinOrDrawOdd} ' : ' ${game.awayTeamWinOdd}"> odds</span>
+</p>
+ <p>   Odds:
+    <span th:text="${game.homeTeamWinOdd}" > homeTeamWinOdd </span> :
+    <span th:text="${game.homeTeamWinOrDrawOdd}" > homeTeamWinOrDrawOdd </span> :
+    <span th:text="${game.DrawOdd}" > DrawOdd </span> :
+     <span th:text="${game.awayTeamWinOrDrawOdd}" > awayTeamWinOrDrawOdd </span> :
+     <span th:text="${game.awayTeamWinOdd}" > homeTeamWinOdd </span> :
+</p>
 </div>
 <div>
     przerobic na zespół czekboxow i przekazywac w ten sposob rate

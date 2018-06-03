@@ -11,7 +11,6 @@
 
     <tr>
         <th> sport </th>
-        <th> league </th>
         <th> team1 </th>
         <th> team2 </th>
         <th> start </th>
@@ -22,16 +21,20 @@
     </tr>
     <tr th:each="game, iterStat: ${liveGames}" >
         <td th:text="${game.sport}"></td>
-        <td th:text="${game.league}"></td>
         <td th:text="${game.start}"></td>
         <td th:text="${game.end}"></td>
         <td th:text="${game.homeTeam.name}"></td>
         <td th:text="${game.awayTeam.name}"></td>
-        <td th:text="${game.homeTeamWinOdd} ' : ' ${homeTeamWinOrDrawOdd} ' : ' ${game.DrawOdd} ' : '
-        ${game.awayTeamWinOrDrawOdd} ' : ' ${game.awayTeamWinOdd}" ></td>
+        <td >
+            <span th:text="${game.homeTeamWinOdd}" > homeTeamWinOdd </span> :
+            <span th:text="${game.homeTeamWinOrDrawOdd}" > homeTeamWinOrDrawOdd </span> :
+            <span th:text="${game.DrawOdd}" > DrawOdd </span> :
+            <span th:text="${game.awayTeamWinOrDrawOdd}" > awayTeamWinOrDrawOdd </span> :
+            <span th:text="${game.awayTeamWinOdd}" > homeTeamWinOdd </span> :
+        </td>
         <span sec:authorize="isAuthenticated()">
-            <td><a href="/game/bet/${game.id}"> bet </a> </td>
-            <!--<td> <a th:href="@{/game/bet(id=${game.id})}">bet</a> </td>-->
+            <!--<td><a href="/game/bet/${game.id}"> bet </a> </td>-->
+            <td> <a th:href="@{/game/bet(id=${game.id})}">bet</a> </td>
         </span>
     </tr>
 </table>

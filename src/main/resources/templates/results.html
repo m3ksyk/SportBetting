@@ -18,7 +18,6 @@
 
     <tr>
         <th> sport </th>
-        <th> league </th>
         <th> team1 </th>
         <th> team2 </th>
         <th> start </th>
@@ -28,12 +27,14 @@
     </tr>
     <tr th:each="game, iterStat: ${gameResults}" >
         <td th:text="${game.sport}"></td>
-        <td th:text="${game.league}"></td>
-        <td th:text="${game.start}"></td>
-        <td th:text="${game.end}"></td>
         <td th:text="${game.homeTeam.name}"></td>
         <td th:text="${game.awayTeam.name}"></td>
-        <td th:text="${game.homeTeam.homeTeamScore} ' : ' ${game.awayTeamScore}"></td>
+        <td th:text="${game.start}"></td>
+        <td th:text="${game.end}"></td>
+        <td >
+            <span th:text="${game.homeTeamScore}" > homeTeamScore </span> :
+            <span th:text="${game.awayTeamScore}" > homeTeamScore </span>
+        </td>
 
     </tr>
 </table>

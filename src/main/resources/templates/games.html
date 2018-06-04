@@ -30,20 +30,21 @@
     </tr>
     <tr th:each="game, iterStat: ${scheduledGames}" >
         <td th:text="${game.sport}"></td>
-        <td th:text="${game.start}"></td>
-        <td th:text="${game.end}"></td>
         <td th:text="${game.homeTeam.name}"></td>
         <td th:text="${game.awayTeam.name}"></td>
+        <td th:text="${game.start}"></td>
+        <td th:text="${game.end}"></td>
+
         <td >
             <span th:text="${game.homeTeamWinOdd}" > homeTeamWinOdd </span> :
             <span th:text="${game.homeTeamWinOrDrawOdd}" > homeTeamWinOrDrawOdd </span> :
             <span th:text="${game.DrawOdd}" > DrawOdd </span> :
             <span th:text="${game.awayTeamWinOrDrawOdd}" > awayTeamWinOrDrawOdd </span> :
-            <span th:text="${game.awayTeamWinOdd}" > homeTeamWinOdd </span> :
+            <span th:text="${game.awayTeamWinOdd}" > homeTeamWinOdd </span>
         </td>
         <span sec:authorize="isAuthenticated()">
-            <!--<td><a href="/game/bet/${game.id}"> bet </a> </td>-->
-            <td> <a class="btn btn-default" th:href="@{/game/bet?id=${game.id}}">bet</a> </td>
+            <td> <a class="btn btn-default" th:href="@{/game/bet(id=${game.id})}">bet</a> </td>
+
         </span>
     </tr>
 </table>

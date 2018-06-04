@@ -70,7 +70,7 @@ public class ScheduledTasksService {
     }
 
     //generating 5 new games every 5 minutes
-    @Scheduled(cron = "0 0/5 * 1/1 * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void regenerateGames() {
         Faker faker = new Faker();
         Random random = new Random();
@@ -120,18 +120,17 @@ public class ScheduledTasksService {
     }
 
     //checks every minute for games going live or finishing
-    @Scheduled(cron = "0 0/1 * 1/1 * ?")
+    @Scheduled(cron = "1/1 * * * * ?")
     public void gameStatusCheck() {
-
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 
-        List<Game> goingLive = gameService.findGamesStarting(timestamp, "scheduled");
-        List<Game> ending = gameService.findGamesEnding(timestamp, "live");
-
+        List<Game> goingLive = gameService.findGamesStarting(timestamp,"scheduled");
         for (Game g : goingLive) {
             g.setStatus("live");
             gameService.save(g);
         }
+
+        List<Game> ending = gameService.findGamesEnding(timestamp, "live");
 
         for (Game g : ending) {
             Team homeTeam = g.getHomeTeam();
@@ -164,7 +163,6 @@ public class ScheduledTasksService {
             teamService.save(homeTeam);
             teamService.save(awayTeam);
             gameService.save(g);
-
         }
     }
 

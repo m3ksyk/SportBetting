@@ -28,12 +28,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<Game> findGamesStarting(Timestamp timestamp, String status) {
-        return gameRepository.findAllByStartAfterAndStatusEquals(timestamp, status);
+        return gameRepository.findAllByStartBeforeAndStatusEquals(timestamp,status);
     }
 
     @Override
     public List<Game> findGamesEnding(Timestamp timestamp, String status) {
-        return gameRepository.findAllByEndAfterAndStatusEquals(timestamp, status);
+        return gameRepository.findAllByEndBeforeAndStatusEquals(timestamp, status);
     }
 
     @Override

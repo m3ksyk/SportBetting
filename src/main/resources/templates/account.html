@@ -23,9 +23,8 @@ Logged in as:
 
 Current wallet balance:
 <p> <p type="text" th:field="${user.wallet}" /></p>
-<a class="btn btn-default" th:href="@{/user/recharge/id=${user.id}}"> charge wallet</a>
-
-<p> <a class="btn btn-default" th:href="@{/user/messages/id=${user.id}}"> view messages</a></p>
+<a class="btn btn-default" th:href="@{/user/recharge(id=${user.id})}"> charge wallet</a>
+<p> <a class="btn btn-default" th:href="@{/user/messages(id=${user.id})}"> view messages</a></p>
 
     <!--history of all user bets-->
 <table class="table table-bordered">

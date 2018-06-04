@@ -13,8 +13,8 @@ public interface GameRepository  extends JpaRepository <Game, Long> {
 
     List<Game> findAllByStatusEquals(String status);
 
-    List<Game> findAllByEndAfterAndStatusEquals(Timestamp timestamp, String status);
-    List<Game> findAllByStartAfterAndStatusEquals(Timestamp timestamp, String status);
+    List<Game> findAllByEndBeforeAndStatusEquals(Timestamp timestamp, String status);
+    List<Game> findAllByStartBeforeAndStatusEquals(Timestamp timestamp, String status);
 
     List<Game> findAllByStatusEqualsAndBetsPaidOutFalse(String status);
 }

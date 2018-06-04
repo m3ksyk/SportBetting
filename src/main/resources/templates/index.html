@@ -12,15 +12,23 @@
 <div class="alert alert-success">
     <span sec:authorize="isAuthenticated()">
         <p> Hello! </p>
+     <p align="right">
+        <form th:action="@{/logout}" method="POST" >
+
+        <input  class="btn btn-default" type="submit" value="logout">
+        </form>
+        </p>
+
+        logout!!
     </span>
 </div>
 
 <div class="alert alert-success" th:insert="menu">
     Menu Component
 </div>
-<div class="alert alert-success" th:insert="live">
-Live games Component
-</div>
+
+    PUT SOMETHING HERE BLYAT
+
 </div>
 </body>
 </html>

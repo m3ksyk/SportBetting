@@ -36,7 +36,7 @@ public class MenuController {
 
     @GetMapping("/menu/results")
     public String viewResults(Model model){
-        model.addAttribute("results", gameService.findGamesByStatus("finished"));
+        model.addAttribute("gameResults", gameService.findGamesByStatus("finished"));
         return "results";
     }
 

@@ -38,5 +38,10 @@ public class Team{
 
     //flag to check if team is currently in-game
     private boolean inGame;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
 

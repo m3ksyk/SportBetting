@@ -21,6 +21,6 @@ public class BetServiceImpl implements BetService {
 
     @Override
     public List<Bet> findAllUserBets(long id) {
-        return betRepository.findAllById(id);
+        return betRepository.findAllByUserId(id);
     }
 }

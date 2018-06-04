@@ -56,7 +56,13 @@ public class Game {
 
     private boolean betsPaidOut;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn
     private List<Bet> bets;
+
+    @Override
+    public String toString() {
+        return  homeTeam.getName() +
+                " vs " + awayTeam.getName();
+    }
 }

@@ -24,13 +24,21 @@
         <th> bet on </th>
         <th> bet amount </th>
         <th> rate </th>
-
+        <th> possible draw </th>
+        <th> win </th>
+        <th> amount Won </th>
+        <th> paid Out </th>
+<!-- change to yes no on boolean fields -->
     </tr>
     <tr th:each="bet, iterStat: ${userBets}" >
         <td th:text="${bet.game}"></td>
         <td th:text="${bet.bettingTeam}"></td>
         <td th:text="${bet.amount}"></td>
         <td th:text="${bet.rate}"></td>
+        <td th:text="${bet.willDraw}"></td>
+        <td th:text="${bet.win}"></td>
+        <td th:text="${bet.amountWon}"></td>
+        <td th:text="${bet.paidOut}"></td>
     </tr>
 </table>
 </span>

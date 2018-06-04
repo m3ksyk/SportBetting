@@ -49,6 +49,14 @@ public class BetController {
 
         String name =request.getUserPrincipal().getName();
         User user = userService.findByUsername(name);
+
+        BigDecimal wallet = user.getWallet();
+
+        if (wallet.compareTo(BigDecimal.valueOf(amount)) < 0){
+            return "placeBet";
+            //dodac komunikaty błędu, że za mało na koncie, zalecic doładowanie
+        }
+
         Bet bet = new Bet();
         bet.setUser(user);
         bet.setAmount(BigDecimal.valueOf(amount));
@@ -75,6 +83,7 @@ public class BetController {
                      bet.setRate(BigDecimal.valueOf(game.getAwayTeamWinOdd()));
                      break;
         }
+
         user.setWallet(user.getWallet().subtract(BigDecimal.valueOf(amount)));
         gameService.save(game);
         userService.save(user);

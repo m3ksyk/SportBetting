@@ -7,15 +7,14 @@
     <!--<link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css" />-->
 </head>
 <body>
+<div class="container">
+
 <div class="alert alert-success">
     <span sec:authorize="isAuthenticated()">
         <p> Hello! </p>
     </span>
 </div>
-<div class="container">
-<!--<div class="alert alert-success" th:insert="login">-->
-    <!--Login Component-->
-<!--</div>-->
+
 <div class="alert alert-success" th:insert="menu">
     Menu Component
 </div>

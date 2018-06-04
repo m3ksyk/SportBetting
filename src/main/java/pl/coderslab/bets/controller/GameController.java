@@ -21,8 +21,4 @@ public class GameController {
         return "DONE";
     }
 
-//    @GetMapping("/game/placeBet")
-//    public String placeBet(){
-//        return null;
-//    }
 }

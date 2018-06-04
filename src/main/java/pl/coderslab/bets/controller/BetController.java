@@ -3,7 +3,6 @@ package pl.coderslab.bets.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import pl.coderslab.bets.entity.Bet;
@@ -13,8 +12,7 @@ import pl.coderslab.bets.service.BetService;
 import pl.coderslab.bets.service.GameService;
 import pl.coderslab.bets.service.UserService;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import java.math.BigDecimal;
 
 @Controller
 public class BetController {
@@ -27,30 +25,63 @@ public class BetController {
     @Autowired
     UserService userService;
 
-    //sypie 500!!
     @GetMapping("/game/{id}/bet")
     public String placeBet(@PathVariable("id") Long id, Model model, WebRequest request) {
-        Bet bet = new Bet();
         Game game = gameService.findById(id);
-            //get current user add to model
         String username = request.getUserPrincipal().getName();
         User user = userService.findByUsername(username);
-        bet.setUser(user);
-        bet.setGame(game);
+
+        double amount = 0;
+        int choice = 0;
+        model.addAttribute("amount", amount);
+        model.addAttribute("choice", choice);
         model.addAttribute("user", user);
+        model.addAttribute("id", game.getId());
         model.addAttribute("game", game);
-        model.addAttribute("bet", bet);
-        gameService.save(game);
         return "placeBet";
     }
 
-    @PostMapping("/game/{id}/bet")
-    public String placeBet(@Valid @ModelAttribute Bet bet, BindingResult result) {
-        if(result.hasErrors()){
-            return "placeBet";
-        }
+    @PostMapping("/game/bet")
+    public String placeBet( WebRequest request, @RequestParam("amount") double amount,
+                            @RequestParam("id") Long id,
+                            @RequestParam("choice") int choice, Model model){
+        Game game = gameService.findById(id);
 
+        String name =request.getUserPrincipal().getName();
+        User user = userService.findByUsername(name);
+        Bet bet = new Bet();
+        bet.setUser(user);
+        bet.setAmount(BigDecimal.valueOf(amount));
+        bet.setGame(game);
+        switch (choice){
+            case 1 : bet.setBettingTeam(game.getHomeTeam());
+                    bet.setWillDraw(false);
+                    bet.setRate(BigDecimal.valueOf(game.getHomeTeamWinOdd()));
+                    break;
+            case 2 : bet.setBettingTeam(game.getHomeTeam());
+                     bet.setWillDraw(true);
+                     bet.setRate(BigDecimal.valueOf(game.getHomeTeamWinOrDrawOdd()));
+                     break;
+            case 3 : bet.setBettingTeam(null);
+                     bet.setWillDraw(true);
+                     bet.setRate(BigDecimal.valueOf(game.getDrawOdd()));
+                     break;
+            case 4 : bet.setBettingTeam(game.getAwayTeam());
+                     bet.setWillDraw(true);
+                     bet.setRate(BigDecimal.valueOf(game.getAwayTeamWinOrDrawOdd()));
+                     break;
+            case 5 : bet.setBettingTeam(game.getAwayTeam());
+                     bet.setWillDraw(false);
+                     bet.setRate(BigDecimal.valueOf(game.getAwayTeamWinOdd()));
+                     break;
+        }
+        user.setWallet(user.getWallet().subtract(BigDecimal.valueOf(amount)));
+        gameService.save(game);
+        userService.save(user);
+        model.addAttribute("user", user);
+        model.addAttribute("id", user.getId());
         betService.save(bet);
         return "redirect:/index";
     }
+
 }

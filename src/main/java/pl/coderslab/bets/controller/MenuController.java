@@ -6,10 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import pl.coderslab.bets.entity.Bet;
 import pl.coderslab.bets.entity.User;
+import pl.coderslab.bets.service.BetService;
 import pl.coderslab.bets.service.GameService;
 import pl.coderslab.bets.service.TeamService;
 import pl.coderslab.bets.service.UserService;
+
+import java.util.List;
 
 @Controller
 public class MenuController {
@@ -22,6 +26,9 @@ public class MenuController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    BetService betService;
 
     @GetMapping("/menu/view")
     public String viewGames(Model model, WebRequest request){
@@ -86,7 +93,8 @@ public class MenuController {
         if (!user.equals(user2)){
             return "403";
         }
-
+        List<Bet> bets = betService.findAllUserBets(id);
+        model.addAttribute("userBets", bets);
         model.addAttribute("user", user);
         return "userBets";
     }

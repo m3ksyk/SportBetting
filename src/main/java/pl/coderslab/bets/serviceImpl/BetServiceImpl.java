@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import pl.coderslab.bets.entity.Bet;
 import pl.coderslab.bets.repository.BetRepository;
 import pl.coderslab.bets.service.BetService;
+
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class BetServiceImpl implements BetService {
     @Autowired
@@ -13,5 +17,10 @@ public class BetServiceImpl implements BetService {
     @Override
     public void save(Bet bet) {
         betRepository.save(bet);
+    }
+
+    @Override
+    public List<Bet> findAllUserBets(long id) {
+        return betRepository.findAllById(id);
     }
 }

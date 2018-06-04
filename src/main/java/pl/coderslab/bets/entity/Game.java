@@ -56,7 +56,7 @@ public class Game {
 
     private boolean betsPaidOut;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn
     private List<Bet> bets;
 }

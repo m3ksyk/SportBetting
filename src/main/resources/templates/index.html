@@ -26,9 +26,41 @@
 <div class="alert alert-success" th:insert="menu">
     Menu Component
 </div>
+    <div class="alert alert-success">
 
-    PUT SOMETHING HERE BLYAT
+    <table class="table table-bordered">
 
+        <tr>
+            <th> sport </th>
+            <th> team1 </th>
+            <th> team2 </th>
+            <th> start </th>
+            <th> end </th>
+            <th> odds </th>
+            <th> score</th>
+
+        </tr>
+        <tr th:each="game, iterStat: ${liveGames}" >
+            <td th:text="${game.sport}"></td>
+            <td th:text="${game.homeTeam.name}"></td>
+            <td th:text="${game.awayTeam.name}"></td>
+            <td th:text="${game.start}"></td>
+            <td th:text="${game.end}"></td>
+            <td >
+                <span th:text="${game.homeTeamWinOdd}" > homeTeamWinOdd </span> :
+                <span th:text="${game.homeTeamWinOrDrawOdd}" > homeTeamWinOrDrawOdd </span> :
+                <span th:text="${game.DrawOdd}" > DrawOdd </span> :
+                <span th:text="${game.awayTeamWinOrDrawOdd}" > awayTeamWinOrDrawOdd </span> :
+                <span th:text="${game.awayTeamWinOdd}" > homeTeamWinOdd </span>
+            </td>
+            <td >
+                <span th:text="${game.homeTeamScore}" > homeTeamScore </span> :
+                <span th:text="${game.awayTeamScore}" > homeTeamScore </span>
+            </td>
+
+        </tr>
+    </table>
+</div>
 </div>
 </body>
 </html>

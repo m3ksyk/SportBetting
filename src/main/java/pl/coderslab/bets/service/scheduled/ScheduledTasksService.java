@@ -186,16 +186,28 @@ public class ScheduledTasksService {
             List<Bet> bets = g.getBets();
             Team winner = g.getWinner();
             Boolean draw = g.isDrawn();
+            double rate = 0;
             for (Bet b : bets) {
                 if (winner.equals(b.getBettingTeam()) && draw == false) {
                     //betting team won
-                    payoutSingleBet(b);
+                    if (winner.equals(g.getHomeTeam())){
+                        rate = g.getHomeTeamWinOdd();
+                    }else {
+                        rate = g.getAwayTeamWinOdd();
+                    }
+                    payoutSingleBet(b, rate);
                 } else if (b.isWillDraw() && draw == true && winner.equals(b.getBettingTeam())) {
                     //betting team won or drew
-                    payoutSingleBet(b);
+                    if (winner.equals(g.getHomeTeam())){
+                        rate = g.getHomeTeamWinOrDrawOdd();
+                    }else {
+                        rate = g.getAwayTeamWinOrDrawOdd();
+                    }
+                    payoutSingleBet(b, rate);
                 } else if (b.isWillDraw() && draw == true && winner == null) {
                     //there was a draw
-                    payoutSingleBet(b);
+                    rate = g.getDrawOdd();
+                    payoutSingleBet(b, rate);
                 } else {
                     //betting team neither won nor drew
                     b.setWin(false);
@@ -222,11 +234,10 @@ public class ScheduledTasksService {
         }
     }
 
-    public void payoutSingleBet(Bet b) {
+    public void payoutSingleBet(Bet b, double rate) {
         b.setWin(true);
         BigDecimal amount = b.getAmount();
-        BigDecimal rate = b.getRate();
-        BigDecimal amountWon = amount.multiply(rate);
+        BigDecimal amountWon = amount.multiply(BigDecimal.valueOf(rate));
         b.setAmountWon(amountWon);
         User user = b.getUser();
         BigDecimal current = user.getWallet();

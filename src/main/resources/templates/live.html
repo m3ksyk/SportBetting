@@ -45,7 +45,7 @@
             <span th:text="${game.awayTeamScore}" > homeTeamScore </span>
         </td>
         <span sec:authorize="isAuthenticated()">
-            <td> <a class="btn btn-default" th:href="@{/game/bet(id=${game.id})}">bet</a> </td>
+            <td> <a class="btn btn-default" th:href="@{/game/{id}/bet(id=${game.id})}">bet</a> </td>
 
         </span>
     </tr>

@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.coderslab.bets.repository.GameRepository;
-import pl.coderslab.bets.repository.TeamRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
+import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.service.GameService;
 import pl.coderslab.bets.service.TeamService;
 import pl.coderslab.bets.service.UserService;
@@ -51,19 +52,29 @@ public class MenuController {
         return "api";
     }
 
-//<a th:href="@{/game/bet(id=${game.id})}">bet</a>
-    //maybe get current user from session
-//    @GetMapping("/menu/viewbets(id=${user.id})")
-//    public String viewUsersCurrentBets(HttpSession session, Model model, @RequestParam long id){
-////        session.
-//        model.addAttribute("user", userService.findById(id));
-//        return "userBets";
-//    }
-//    //maybe get current user from session
-//    @GetMapping("/menu/viewaccount(id=${user.id})")
-//    public String viewUserAccount(Model model, @RequestParam long id){
-//        model.addAttribute("user", userService.findById(id));
-//        return "account";
-//    }
+    @GetMapping("/menu/viewbets")
+    public String viewUsersCurrentBets(Model model, @RequestParam("id") long id, WebRequest request) {
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(username);
+        User user2 = userService.findById(id);
+        if (!user.equals(user2)){
+            return "403";
+        }
 
+        model.addAttribute("user", user);
+        return "userBets";
+    }
+
+    @GetMapping("/menu/viewaccount")
+    public String viewUserAccount(Model model, @RequestParam("id") long id, WebRequest request) {
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(username);
+        User user2 = userService.findById(id);
+        if (!user.equals(user2)){
+            return "403";
+        }
+
+        model.addAttribute("user", user);
+        return "account";
+    }
 }

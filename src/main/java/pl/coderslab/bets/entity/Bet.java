@@ -28,7 +28,6 @@ public class Bet {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Team bettingTeam;
-    //change to string?
 
     private boolean willDraw;
 

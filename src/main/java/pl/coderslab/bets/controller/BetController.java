@@ -5,10 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import pl.coderslab.bets.entity.Bet;
+import pl.coderslab.bets.entity.Game;
+import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.service.BetService;
 import pl.coderslab.bets.service.GameService;
+import pl.coderslab.bets.service.UserService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -19,21 +24,32 @@ public class BetController {
     @Autowired
     BetService betService;
 
+    @Autowired
+    UserService userService;
 
     //sypie 500!!
-    @GetMapping("/game/bet")
-    public String placeBet(@RequestParam("id") Long id, Model model) {
-        model.addAttribute("game", gameService.findById(id));
-        model.addAttribute("bet", new Bet());
+    @GetMapping("/game/{id}/bet")
+    public String placeBet(@PathVariable("id") Long id, Model model, WebRequest request) {
+        Bet bet = new Bet();
+        Game game = gameService.findById(id);
+            //get current user add to model
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(username);
+        bet.setUser(user);
+        bet.setGame(game);
+        model.addAttribute("user", user);
+        model.addAttribute("game", game);
+        model.addAttribute("bet", bet);
+        gameService.save(game);
         return "placeBet";
     }
 
-    @PostMapping("/game/bet")
+    @PostMapping("/game/{id}/bet")
     public String placeBet(@Valid @ModelAttribute Bet bet, BindingResult result) {
         if(result.hasErrors()){
             return "placeBet";
         }
-        //set rate somewhere here!!
+
         betService.save(bet);
         return "redirect:/index";
     }

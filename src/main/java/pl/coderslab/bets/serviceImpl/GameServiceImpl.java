@@ -20,7 +20,6 @@ public class GameServiceImpl implements GameService {
         gameRepository.save(game);
     }
 
-
     @Override
     public Game findById(Long id) {
         return gameRepository.getOne(id);

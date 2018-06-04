@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>place bet</title>
-    <!--<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
 
 </head>
@@ -22,6 +21,7 @@
 <span th:text="${game.awayTeam.name}">team2</span>
 </p>
  <p>   Odds:
+
     <span th:text="${game.homeTeamWinOdd}"> homeTeamWinOdd </span> :
     <span th:text="${game.homeTeamWinOrDrawOdd}"> homeTeamWinOrDrawOdd </span> :
     <span th:text="${game.DrawOdd}"> DrawOdd </span> :
@@ -30,17 +30,26 @@
 </p>
 </div>
 <div>
-    przerobic na zespół czekboxow i przekazywac w ten sposob rate
-Your bet:
-<form th:action="@{/game/bet}" th:object="${bet}" method="post">
+
+    Your bet:
+<form th:action="@{/game/{id}/bet}" th:object="${bet}" method="post">
+
     <p th:if="${#fields.hasErrors('bet')}" th:errors="*{bet}">  </p>
 
-    <p>amount: <input type="text" th:field="*{amount}"/> amount </p>
-    <p>team: <select th:field="${bet.bettingTeam}" th:remove="all-but-first">
-        <option th:field="${game.homeTeam.name}"> team1 </option>
-        <option th:field="${game.awayTeam.name}"> team2 </option>
+    <p>amount: <input type="text" th:field="${bet.amount}"/> amount </p>
+
+    <p>bet choice: <select th:field="${bet.bettingTeam}" th:field="${bet.willDraw}" th:remove="all-but-first">
+
+        <!--<option> home team wins </option> &lt;!&ndash; ustawia betting team na home team gry i willDraw na false &ndash;&gt;-->
+        <!--<option> home team wins or draws</option> &lt;!&ndash; ustawia betting team na home team gry i willDraw na true &ndash;&gt;-->
+        <!--<option> draw</option> &lt;!&ndash; ustawia betting team na null i willDraw na true &ndash;&gt;-->
+        <!--<option> away team wins or draws</option> &lt;!&ndash; ustawia betting team na away team gry i willDraw na true &ndash;&gt;-->
+        <!--<option> away team wins </option> &lt;!&ndash; ustawia betting team na away team gry i willDraw na false&ndash;&gt;-->
+
+        <option th:field="${game.homeTeam.name}" th:value="${bet.bettingTeam}"> team1 </option>
+        <option th:field="${game.awayTeam.name}" th:value="${bet.bettingTeam}"> team2 </option>
     </select></p>
-    <p>draw:     <input type="checkbox" name="draw" th:value="${bet.willDraw}"/></p>
+    <p> draw:     <input type="checkbox" name="draw" th:value="${bet.willDraw}"/></p>
 
     <p><input type="submit" value="Submit"/></p>
 </form>

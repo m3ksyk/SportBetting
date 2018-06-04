@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Standings</title>
-    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
+
 </head>
 <body>
+<div class="alert alert-success">
 <table class="table table-bordered">
 <tr>
     <th> standing </th>
@@ -32,5 +35,6 @@
 
 </tr>
 </table>
+</div>
 </body>
 </html>

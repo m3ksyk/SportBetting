@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>BetIt</title>
@@ -7,15 +7,21 @@
     <!--<link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css" />-->
 </head>
 <body>
-<div class="alert alert-success" th:insert="login">
-    Login Component
+<div class="alert alert-success">
+    <span sec:authorize="isAuthenticated()">
+        <p> Hello! </p>
+    </span>
 </div>
+<div class="container">
+<!--<div class="alert alert-success" th:insert="login">-->
+    <!--Login Component-->
+<!--</div>-->
 <div class="alert alert-success" th:insert="menu">
     Menu Component
 </div>
 <div class="alert alert-success" th:insert="live">
 Live games Component
 </div>
-
+</div>
 </body>
 </html>

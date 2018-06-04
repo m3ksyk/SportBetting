@@ -4,9 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>messages</title>
-    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
+
 </head>
 <body>
+<div class="alert alert-success">
+
 <span sec:authorize="isAuthenticated()">
 
 BOLD un-read messages!
@@ -20,5 +24,6 @@ or show only unread messages
 </ul>
 
 </span>
+</div>
 </body>
 </html>

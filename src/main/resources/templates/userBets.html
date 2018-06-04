@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title> my current bets</title>
-    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
+
 </head>
 <body>
-<span sec:authorize="isAuthenticated()">
+<div class="alert alert-success">
 
+<span sec:authorize="isAuthenticated()">
 <!--view current user bets here (bets where game status is not "finished")-->
 
 <table class="table table-bordered">
@@ -30,5 +33,6 @@
     </tr>
 </table>
 </span>
+</div>
 </body>
 </html>

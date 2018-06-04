@@ -102,7 +102,7 @@ public class ScheduledTasksService {
                 game.setHomeTeamWinOrDrawOdd(faker.number().randomDouble(2, 1, 5));
                 game.setDrawOdd(faker.number().randomDouble(2, 1, 5));
                 game.setAwayTeamWinOdd(faker.number().randomDouble(2, 1, 5));
-                game.setHomeTeamWinOrDrawOdd(faker.number().randomDouble(2, 1, 5));
+                game.setAwayTeamWinOrDrawOdd(faker.number().randomDouble(2, 1, 5));
 
                 //setting start and end date for the games
 //            Timestamp = (Timestamp) new Date(System.currentTimeMillis() + 5 *60*1000);

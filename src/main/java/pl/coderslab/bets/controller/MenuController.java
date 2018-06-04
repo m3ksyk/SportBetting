@@ -24,31 +24,57 @@ public class MenuController {
     UserService userService;
 
     @GetMapping("/menu/view")
-    public String viewGames(Model model){
+    public String viewGames(Model model, WebRequest request){
+        String name =request.getUserPrincipal().getName();
+        User user = userService.findByUsername(name);
+        model.addAttribute("id", user.getId());
+        model.addAttribute("user", user);
+
         model.addAttribute("scheduledGames", gameService.findGamesByStatus("scheduled"));
+
         return "games";
     }
 
     @GetMapping("/menu/live")
-    public String viewLiveGames(Model model){
+    public String viewLiveGames(Model model, WebRequest request){
+        String name =request.getUserPrincipal().getName();
+        User user = userService.findByUsername(name);
+        model.addAttribute("id", user.getId());
+        model.addAttribute("user", user);
+
         model.addAttribute("liveGames", gameService.findGamesByStatus("live"));
         return "live";
     }
 
     @GetMapping("/menu/results")
-    public String viewResults(Model model){
+    public String viewResults(Model model, WebRequest request){
+        String name =request.getUserPrincipal().getName();
+        User user = userService.findByUsername(name);
+        model.addAttribute("id", user.getId());
+        model.addAttribute("user", user);
+
         model.addAttribute("gameResults", gameService.findGamesByStatus("finished"));
         return "results";
     }
 
     @GetMapping("/menu/standings")
-    public String viewStandings(Model model){
+    public String viewStandings(Model model, WebRequest request){
+        String name =request.getUserPrincipal().getName();
+        User user = userService.findByUsername(name);
+        model.addAttribute("id", user.getId());
+        model.addAttribute("user", user);
+
         model.addAttribute("standings", teamService.findAllTeamsSortedByStanding());
         return "standings";
     }
 
     @GetMapping("/menu/api")
-    public String viewApi(){
+    public String viewApi(Model model, WebRequest request){
+        String name =request.getUserPrincipal().getName();
+        User user = userService.findByUsername(name);
+        model.addAttribute("id", user.getId());
+        model.addAttribute("user", user);
+
         return "api";
     }
 

@@ -14,17 +14,18 @@
     Menu Component
 </div>
 <div class="alert alert-success">
-<span sec:authorize="isAuthenticated()">
+<!--<span sec:authorize="isAuthenticated()">-->
 
-<form th:action="@{/user/recharge}" th:object="${user}" method="post">
-    <p th:if="${#fields.hasErrors('user')}" th:errors="*{user}">  </p>
+<form th:action="@{/user/recharge}" method="post">
 
-    <p>amount: <input type="text" th:field="*{amount}" /> amount </p>
-    <p>credit card number: <input type="text" th:field="*{creditCardNum}" /> credCardNum </p>
+    <p>amount: <input type="text" name="amount" /> amount </p>
+    <!--<p th:if="${#fields.hasErrors('amount')}" th:errors="${amount}">  </p>-->
+    <p>credit card number: <input type="text" th:field="${user.creditCardNum}" /> credCardNum </p>
+    <p th:if="${#fields.hasErrors('creditCardNum')}" th:errors="${user.creditCardNum}">  </p>
 
     <p><input type="submit" value="Charge" /></p>
 </form>
-</span>
+<!--</span>-->
 </div>
 </body>
 </html>

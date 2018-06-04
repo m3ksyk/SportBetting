@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.repository.UserRepository;
@@ -55,24 +52,46 @@ public class UserController {
     }
 
     @GetMapping("/user/recharge")
-    public String recharge(WebRequest request, Model model){
-        //get current user add to model
-//        User user = (User) request.getUserPrincipal();
-//        model.addAttribute("user", user);
+    public String recharge(WebRequest request, Model model, @RequestParam("id") long id){
+        String userName = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(userName);
+        User user2 = userService.findById(id);
+        if (!user.equals(user2)){
+            return "403";
+        }
+        double amount = 0;
+
+        model.addAttribute("user", user);
+        model.addAttribute("creditCardNum", user.getCreditCardNum());
+        model.addAttribute("amount", amount);
         return "recharge";
     }
 
     @PostMapping("/user/recharge")
-    public String recharge(@ModelAttribute User user, @ModelAttribute BigDecimal amount, BindingResult result){
-        if(result.hasErrors()){
-            return "recharge";
-        }
-
+    public String recharge(WebRequest request, @RequestParam("amount") double amount, Model model){
+        String name =request.getUserPrincipal().getName();
+        User user = userService.findByUsername(name);
         BigDecimal current = user.getWallet();
-        BigDecimal res = current.add(amount);
-        user.setWallet(res);
+        BigDecimal added = current.add(BigDecimal.valueOf(amount));
+        user.setWallet(added);
 
-        userService.saveUser(user);
-        return "recharge";
+        userService.save(user);
+        model.addAttribute("user", user);
+        model.addAttribute("id", user.getId());
+
+        return "account";
     }
+    @GetMapping("/user/messages")
+    public String messages(WebRequest request, @RequestParam("id") long id, Model model){
+        String userName = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(userName);
+        User user2 = userService.findById(id);
+        if (!user.equals(user2)){
+            return "403";
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("id", user.getId());
+        return "userMessages";
+    }
+
 }

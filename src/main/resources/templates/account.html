@@ -14,15 +14,14 @@
     Menu Component
 </div>
 <div class="alert alert-success">
-<span sec:authorize="isAuthenticated()">
-<!--add check if user is viewing HIS account-->
+<!--<span sec:authorize="isAuthenticated()">-->
 
 Logged in as:
-<p>name: <p type="text" th:field="${user.username}" /></p>
-<p>email: <p type="text" th:field="${user.email}" /></p>
+<span> name: <p  th:text="${user.username}" >  name </p> </span>
+    <span> email: <p th:text="${user.email}" > email </p> </span>
 
 Current wallet balance:
-<p> <p type="text" th:field="${user.wallet}" /></p>
+ <p th:text="${user.wallet}" > wallet </p>
 <a class="btn btn-default" th:href="@{/user/recharge(id=${user.id})}"> charge wallet</a>
 <p> <a class="btn btn-default" th:href="@{/user/messages(id=${user.id})}"> view messages</a></p>
 
@@ -45,7 +44,7 @@ Current wallet balance:
         <!-- amountWon calculated in controller and passed to view-->
     </tr>
 </table>
-</span>
+<!--</span>-->
 </div>
 </body>
 </html>

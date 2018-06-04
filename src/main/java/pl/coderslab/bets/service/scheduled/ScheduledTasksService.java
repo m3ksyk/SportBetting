@@ -1,7 +1,6 @@
 package pl.coderslab.bets.service.scheduled;
 
 import com.github.javafaker.Faker;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class ScheduledTasksService {
@@ -34,13 +32,6 @@ public class ScheduledTasksService {
 
     @Autowired
     BetService betService;
-
-//    ScheduledTasksService() {
-
-//        this.regenerateGames();
-//        this.gameStatusCheck();
-//        this.resultRigger();
-//    }
 
     //for now we only have one sport : football, other sports may be added if functionalities are working
     public void createSports() {
@@ -105,9 +96,7 @@ public class ScheduledTasksService {
                 game.setAwayTeamWinOrDrawOdd(faker.number().randomDouble(2, 1, 5));
 
                 //setting start and end date for the games
-//            Timestamp = (Timestamp) new Date(System.currentTimeMillis() + 5 *60*1000);
                 Timestamp startDate = Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
-//            Timestamp endDate= (Timestamp) new Date(System.currentTimeMillis() + 10 *60*1000);
                 Timestamp endDate = Timestamp.valueOf(LocalDateTime.now().plusMinutes(10));
 
                 game.setStart(startDate);
@@ -146,7 +135,7 @@ public class ScheduledTasksService {
                 awayTeam.setGamesLost(awayTeam.getGamesLost() + 1);
                 homeTeam.setGamesWon(homeTeam.getGamesWon() + 1);
             } else {
-                g.setWinner(null);
+                g.setWinner(null);//was null
                 g.setDrawn(true);
                 awayTeam.setDraws(awayTeam.getDraws() + 1);
                 homeTeam.setDraws(homeTeam.getDraws() + 1);
@@ -177,36 +166,36 @@ public class ScheduledTasksService {
             gameService.save(g);
         }
     }
-
     //finds bets not paid out
-    @Scheduled(cron = "0/1 * * * * ?")
+    @Scheduled(cron = "1/1 * * * * ?")
     public void gamesPayout() {
         List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");
+
         for (Game g : finishedGames) {
-            List<Bet> bets = g.getBets();
+            List<Bet> bets = betService.findAllByGameId(g.getId());
             Team winner = g.getWinner();
             Boolean draw = g.isDrawn();
             double rate = 0;
             for (Bet b : bets) {
-                if (winner.equals(b.getBettingTeam()) && draw == false) {
-                    //betting team won
-                    if (winner.equals(g.getHomeTeam())){
-                        rate = g.getHomeTeamWinOdd();
-                    }else {
-                        rate = g.getAwayTeamWinOdd();
-                    }
+                if (b.isWillDraw() && draw == true && winner == null) {
+                    //there was a draw
+                    rate = g.getDrawOdd();
                     payoutSingleBet(b, rate);
-                } else if (b.isWillDraw() && draw == true && winner.equals(b.getBettingTeam())) {
-                    //betting team won or drew
+                } else if ( b.isWillDraw() && winner.equals(b.getBettingTeam())) {
                     if (winner.equals(g.getHomeTeam())){
                         rate = g.getHomeTeamWinOrDrawOdd();
                     }else {
                         rate = g.getAwayTeamWinOrDrawOdd();
                     }
                     payoutSingleBet(b, rate);
-                } else if (b.isWillDraw() && draw == true && winner == null) {
-                    //there was a draw
-                    rate = g.getDrawOdd();
+                } else if (winner != null  && winner.equals(b.getBettingTeam())
+                        && draw == false && b.isWillDraw() == false) {
+                    //betting team won
+                    if (winner.equals(g.getHomeTeam())){
+                        rate = g.getHomeTeamWinOdd();
+                    }else {
+                        rate = g.getAwayTeamWinOdd();
+                    }
                     payoutSingleBet(b, rate);
                 } else {
                     //betting team neither won nor drew

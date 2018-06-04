@@ -8,4 +8,6 @@ public interface BetService {
     void save(Bet bet);
 
     List<Bet> findAllUserBets(long id);
+
+    List<Bet> findAllByGameId(long id);
 }

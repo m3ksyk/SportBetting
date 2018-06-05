@@ -50,6 +50,11 @@ public class UserController {
 
         return "login.html";
     }
+    //complete the logout function
+    @GetMapping("/logout")
+    public String logout(){
+        return "logout";
+    }
 
     @GetMapping("/user/recharge")
     public String recharge(WebRequest request, Model model, @RequestParam("id") long id){
@@ -81,6 +86,7 @@ public class UserController {
 
         return "account";
     }
+
     @GetMapping("/user/messages")
     public String messages(WebRequest request, @RequestParam("id") long id, Model model){
         String userName = request.getUserPrincipal().getName();

@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import pl.coderslab.bets.entity.Bet;
+import pl.coderslab.bets.entity.Game;
 import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.service.BetService;
 import pl.coderslab.bets.service.GameService;
 import pl.coderslab.bets.service.TeamService;
 import pl.coderslab.bets.service.UserService;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -36,7 +38,6 @@ public class MenuController {
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
-
         model.addAttribute("scheduledGames", gameService.findGamesByStatus("scheduled"));
 
         return "games";
@@ -48,8 +49,8 @@ public class MenuController {
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
-
         model.addAttribute("liveGames", gameService.findGamesByStatus("live"));
+
         return "live";
     }
 
@@ -59,8 +60,8 @@ public class MenuController {
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
-
         model.addAttribute("gameResults", gameService.findGamesByStatus("finished"));
+
         return "results";
     }
 
@@ -70,8 +71,8 @@ public class MenuController {
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
-
         model.addAttribute("standings", teamService.findAllTeamsSortedByStanding());
+
         return "standings";
     }
 
@@ -93,9 +94,10 @@ public class MenuController {
         if (!user.equals(user2)){
             return "403";
         }
-        List<Bet> bets = betService.findAllUserBets(id);
+        List<Bet> bets = betService.findAllLiveUserBets(user);
         model.addAttribute("userBets", bets);
         model.addAttribute("user", user);
+
         return "userBets";
     }
 
@@ -108,7 +110,26 @@ public class MenuController {
             return "403";
         }
 
+        List<Bet> bets = betService.findAllUserBets(id);
+        model.addAttribute("userBets", bets);
         model.addAttribute("user", user);
+
         return "account";
+    }
+
+    @GetMapping("/menu/viewSingleGame")
+    public String viewSingleGame(Model model, @RequestParam("id") long id, WebRequest request) {
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(username);
+        User user2 = userService.findById(id);
+        if (!user.equals(user2)){
+            return "403";
+        }
+
+        List<Game> game = Collections.singletonList(gameService.findById(id));
+        model.addAttribute("singleGame", game);
+        model.addAttribute("user", user);
+
+        return "game";
     }
 }

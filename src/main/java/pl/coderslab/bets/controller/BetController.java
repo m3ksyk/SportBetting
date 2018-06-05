@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import pl.coderslab.bets.entity.Bet;
 import pl.coderslab.bets.entity.Game;
-import pl.coderslab.bets.entity.Team;
 import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.service.BetService;
 import pl.coderslab.bets.service.GameService;
@@ -53,9 +52,10 @@ public class BetController {
 
         BigDecimal wallet = user.getWallet();
 
-        if (wallet.compareTo(BigDecimal.valueOf(amount)) < 0){
+        if (wallet.compareTo(BigDecimal.valueOf(amount)) < 0 || amount < 0){
             return "placeBet";
             //dodac komunikaty błędu, że za mało na koncie, zalecic doładowanie
+            //dodac komunikat błędu, że ilosc nie moze byc mniejsza niz 0
         }
 
         Bet bet = new Bet();

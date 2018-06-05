@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.coderslab.bets.entity.Bet;
+import pl.coderslab.bets.entity.User;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface BetRepository extends JpaRepository <Bet, Long> {
     List<Bet> findAllByUserId(@Param("id") long id);
 
     List<Bet> findAllByGameId(long id);
+
+    List<Bet> findAllByUserAndPaidOutFalse(User user);
 }

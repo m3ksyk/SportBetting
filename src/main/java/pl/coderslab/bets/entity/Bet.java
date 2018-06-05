@@ -33,8 +33,6 @@ public class Bet {
 
     private boolean win;
 
-    private boolean groupBet;
-
     private BigDecimal amountWon;
 
     private boolean paidOut;

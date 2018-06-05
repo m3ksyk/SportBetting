@@ -3,8 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title> my current bets</title>
-    <!--<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
+    <title> my bets</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
 
 </head>
@@ -16,7 +15,6 @@
 <div class="alert alert-success">
 
 <span sec:authorize="isAuthenticated()">
-<!--view current user bets here (bets where game status is not "finished")-->
 
 <table class="table table-bordered">
     <tr>
@@ -24,21 +22,14 @@
         <th> bet on </th>
         <th> bet amount </th>
         <th> rate </th>
-        <th> possible draw </th>
-        <th> win </th>
-        <th> amount Won </th>
-        <th> paid Out </th>
-<!-- change to yes no on boolean fields -->
     </tr>
     <tr th:each="bet, iterStat: ${userBets}" >
-        <td th:text="${bet.game}"></td>
+        <td th:text="${bet.game}">
+            <a class="btn btn-default" th:href="@{/menu/viewSingleGame(id=${bet.game.id})}">show </a></td>
         <td th:text="${bet.bettingTeam}"></td>
         <td th:text="${bet.amount}"></td>
         <td th:text="${bet.rate}"></td>
-        <td th:text="${bet.willDraw}"></td>
-        <td th:text="${bet.win}"></td>
-        <td th:text="${bet.amountWon}"></td>
-        <td th:text="${bet.paidOut}"></td>
+
     </tr>
 </table>
 </span>

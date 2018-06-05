@@ -7,50 +7,62 @@
 
 </head>
 <body>
-
+<div class="container">
 <div class="alert alert-success" th:insert="menu">
     Menu Component
 </div>
-Here you can learn about using data feed we provide for our users. To use this feed you need to use your unique api key
-You can get you apikey HERE
-<!--button for apikey action-->
-Methods:
+<div class="alert alert-success">
+    <p>Here you can learn about using data feed we provide for our users.
+        To use this feed you need to use your unique api key</p>
+    <p> <a class="btn btn-default" th:href="@{/api/get-apikey}">get your api key</a> </p>
 
+<p>
+    Methods:
 all method urls work by this scheme:
 URL : api/{method name}?apikey={your_apikey}
-
-<!--jebnac jako liste -->
+</p>
 List of methods:
-
-get leagues:
-GET /api/get-leagues
-returns supported football leagues
+<div>
+<ol class="list-view">
+    <li>
+        <p>get leagues: </p>
+        <p>GET /api/get-leagues </p>
+        <p> returns supported football leagues </p>
 <!--parameters?-->
-
-get sports:
-GET /api/get-sports
-returns supported sports
+    </li>
+     <li>
+        <p>get sports: </p>
+        <p> GET /api/get-sports </p>
+        <p>returns supported sports </p>
 <!--parameters?-->
-
-get teams:
-GET /api/get-teams
-returns supported teams with their results and current standing
+    </li>
+    <li>
+        <p>get teams: </p>
+        <p>GET /api/get-teams </p>
+        <p>returns supported teams with their results and current standing </p>
 <!--parameters?-->
-
-get live games:
-GET /api/get-live-games
-returns live games
+    </li>
+    <li>
+        <p>get live games: </p>
+        <p>GET /api/get-live-games </p>
+        <p>returns live games </p>
 <!--parameters?-->
-
-get scheduled games:
-GET /api/get-scheduled-games
-returns scheduled games
+    </li>
+    <li>
+        <p>get scheduled games: </p>
+        <p>GET /api/get-scheduled-games </p>
+        <p> returns scheduled games </p>
 <!--parameters?-->
-
-get game results:
-GET /api/get-games-results
-returns the games results;
+    </li>
+    <li>
+        <p>get game results: </p>
+        <p>GET /api/get-games-results </p>
+        <p>returns the games results; </p>
 <!--parameters?-->
-
+    </li>
+</ol>
+</div>
+</div>
+</div>
 </body>
 </html>

@@ -2,13 +2,13 @@ package pl.coderslab.bets.controller.rest;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.coderslab.bets.entity.Apikey;
+import pl.coderslab.bets.service.ApikeyService;
 import pl.coderslab.bets.service.api.JSONProvider;
 
-import java.util.ArrayList;
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 
 @RestController
 @RequestMapping("/api")
@@ -17,48 +17,83 @@ public class ApiFeedController {
     @Autowired
     JSONProvider jsonProvider;
 
-    //TODO add proper logic for sending json (done lrdy?)
-    //TODO add user api-key verification (or don't, but if you don't remove the fuckin comment)
+    @Autowired
+    ApikeyService apikeyService;
 
     @GetMapping(path= "/get-apikey")
+    @ResponseBody
     public String getApikey() {
-
-        return "apikey";
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[64];
+        random.nextBytes(bytes);
+        String akString = DatatypeConverter.printHexBinary(bytes).toLowerCase();
+        Apikey apikey = new Apikey();
+        apikey.setValue(akString);
+        apikeyService.save(apikey);
+        return "your apikey: " + akString;
     }
 
     @GetMapping(path= "/get-leagues")
-    public ArrayList<JSONObject> getLeaguesAction() {
-        ArrayList<JSONObject> leagues = jsonProvider.getLeagues();
-        return leagues;
+    public JSONObject getLeaguesAction(@RequestParam("apikey") String value) {
+        if (apikeyFound(value)) {
+            return jsonProvider.getLeagues();
+        }else {
+            return null;
+        }
+
     }
 
     @GetMapping(path= "/get-sports")
-    public ArrayList<JSONObject> getSportsAction() {
-        ArrayList<JSONObject> sports = jsonProvider.getSports();
-        return sports;
+    public JSONObject getSportsAction(@RequestParam("apikey") String value) {
+        if (apikeyFound(value)) {
+            return jsonProvider.getSports();
+        }else {
+            return null;
+        }
     }
 
     @GetMapping(path= "/get-teams")
-    public ArrayList<JSONObject> getTeamsAction() {
-        ArrayList<JSONObject> teams = jsonProvider.getTeams();
-        return teams;
+    public JSONObject getTeamsAction(@RequestParam("apikey") String value) {
+        if (apikeyFound(value)) {
+            return jsonProvider.getTeams();
+        }else {
+            return null;
+        }
     }
 
     @GetMapping(path= "/get-live-games")
-    public ArrayList<JSONObject> getLiveGamesAction() {
-        ArrayList<JSONObject> liveGames = jsonProvider.getLiveGames();
-        return liveGames;
+    public JSONObject getLiveGamesAction(@RequestParam("apikey") String value) {
+        if (apikeyFound(value)){
+            return jsonProvider.getLiveGames();
+        } else {
+            return null;
+        }
     }
 
     @GetMapping(path= "/get-scheduled-games")
-    public ArrayList<JSONObject> getScheduledGamesAction() {
-        ArrayList<JSONObject> scheduledGames = jsonProvider.getScheduledGames();
-        return scheduledGames;
+    public JSONObject getScheduledGamesAction(@RequestParam("apikey") String value) {
+        if (apikeyFound(value)){
+            return jsonProvider.getScheduledGames();
+        } else {
+            return null;
+        }
     }
 
     @GetMapping(path= "/get-games-results")
-    public ArrayList<JSONObject> getGamesResultsAction() {
-        ArrayList<JSONObject> results = jsonProvider.getGamesResults();
-        return results;
+    public JSONObject getGamesResultsAction(@RequestParam("apikey") String value) {
+        if (apikeyFound(value)){
+            return jsonProvider.getGamesResults();
+        } else{
+            return null;
+        }
+    }
+
+    public boolean apikeyFound(String value){
+        Apikey apikey = apikeyService.findApiKeyByValue(value);
+        if (apikey == null){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

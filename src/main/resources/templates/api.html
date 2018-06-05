@@ -11,7 +11,46 @@
 <div class="alert alert-success" th:insert="menu">
     Menu Component
 </div>
-    under construction
-data access points over here
+Here you can learn about using data feed we provide for our users. To use this feed you need to use your unique api key
+You can get you apikey HERE
+<!--button for apikey action-->
+Methods:
+
+all method urls work by this scheme:
+URL : api/{method name}?apikey={your_apikey}
+
+<!--jebnac jako liste -->
+List of methods:
+
+get leagues:
+GET /api/get-leagues
+returns supported football leagues
+<!--parameters?-->
+
+get sports:
+GET /api/get-sports
+returns supported sports
+<!--parameters?-->
+
+get teams:
+GET /api/get-teams
+returns supported teams with their results and current standing
+<!--parameters?-->
+
+get live games:
+GET /api/get-live-games
+returns live games
+<!--parameters?-->
+
+get scheduled games:
+GET /api/get-scheduled-games
+returns scheduled games
+<!--parameters?-->
+
+get game results:
+GET /api/get-games-results
+returns the games results;
+<!--parameters?-->
+
 </body>
 </html>

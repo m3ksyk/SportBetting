@@ -14,16 +14,16 @@
     Menu Component
 </div>
 <div class="alert alert-success">
-<!--<span sec:authorize="isAuthenticated()">-->
 
 Logged in as:
-<span> name: <p  th:text="${user.username}" >  name </p> </span>
-    <span> email: <p th:text="${user.email}" > email </p> </span>
+<p> name: <p  th:text="${user.username}" > </p> </p>
+    <p> email: <p th:text="${user.email}" > </p> </p>
 
 Current wallet balance:
  <p th:text="${user.wallet}" > wallet </p>
 <a class="btn btn-default" th:href="@{/user/recharge(id=${user.id})}"> charge wallet</a>
 <p> <a class="btn btn-default" th:href="@{/user/messages(id=${user.id})}"> view messages</a></p>
+<p> <a class="btn btn-default" th:href="@{/user/subscriptions(id=${user.id})}"> view subscriptions</a></p>
 
     <!--history of all user bets-->
 <table class="table table-bordered">
@@ -43,7 +43,6 @@ Current wallet balance:
         <td th:text="${bet.amountWon}"></td>
     </tr>
 </table>
-<!--</span>-->
 </div>
 </body>
 </html>

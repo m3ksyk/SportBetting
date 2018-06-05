@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My subscriptions</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
+
+</head>
+<body>
+
+<div class="alert alert-success" th:insert="menu">
+    Menu Component
+</div>
+<div class="alert alert-success">
+    <table class="table table-bordered">
+        <tr>
+            <th> sport </th>
+            <th> league </th>
+            <th> name </th>
+            <th> wins </th>
+            <th> losses </th>
+            <th> draws </th>
+            <th> goals scored </th>
+            <th> goals lost </th>
+            <th> subscribe </th>
+
+        </tr>
+        <tr th:each="team, iterStat: ${subs}" >
+            <td th:text="${team.sport}"></td>
+            <td th:text="${team.league}"></td>
+            <td th:text="${team.name}"></td>
+            <td th:text="${team.gamesWon}"></td>
+            <td th:text="${team.gamesLost}"></td>
+            <td th:text="${team.draws}"></td>
+            <td th:text="${team.goalsScored}"></td>
+            <td th:text="${team.goalsLost}"></td>
+            <td> <a class="btn btn-default" th:href="@{/subscribe(id=${team.id})}"> subscribe </a> </td>
+
+        </tr>
+    </table>
+</div></body>
+</html>

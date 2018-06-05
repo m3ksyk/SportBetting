@@ -34,4 +34,9 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.findAllOrderByTableStandingDesc();
     }
 
+    @Override
+    public Team findTeamById(long id) {
+        return teamRepository.getOne(id);
+    }
+
 }

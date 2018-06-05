@@ -24,6 +24,7 @@
     <th> draws </th>
     <th> goals scored </th>
     <th> goals lost </th>
+    <th> subscribe </th>
 
 </tr>
 <tr th:each="team, iterStat: ${standings}" >
@@ -36,6 +37,7 @@
     <td th:text="${team.draws}"></td>
     <td th:text="${team.goalsScored}"></td>
     <td th:text="${team.goalsLost}"></td>
+    <td> <a class="btn btn-default" th:href="@{/subscribe(id=${team.id})}"> subscribe </a> </td>
 
 </tr>
 </table>

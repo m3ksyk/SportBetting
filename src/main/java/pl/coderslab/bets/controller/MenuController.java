@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import pl.coderslab.bets.entity.Bet;
 import pl.coderslab.bets.entity.Game;
+import pl.coderslab.bets.entity.Team;
 import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.service.BetService;
 import pl.coderslab.bets.service.GameService;
@@ -119,17 +120,25 @@ public class MenuController {
 
     @GetMapping("/menu/viewSingleGame")
     public String viewSingleGame(Model model, @RequestParam("id") long id, WebRequest request) {
-        String username = request.getUserPrincipal().getName();
-        User user = userService.findByUsername(username);
-        User user2 = userService.findById(id);
-        if (!user.equals(user2)){
-            return "403";
-        }
 
         List<Game> game = Collections.singletonList(gameService.findById(id));
         model.addAttribute("singleGame", game);
-        model.addAttribute("user", user);
 
         return "game";
     }
+    @GetMapping("/subscribe")
+    public String subscribeToTeam(Model model, @RequestParam("id") long id, WebRequest request) {
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(username);
+
+        Team team = teamService.findTeamById(id);
+        team.addSubscriber(user);
+        user.addSubscription(team);
+        teamService.save(team);
+        userService.save(user);
+        model.addAttribute("id", user.getId());
+        model.addAttribute("user", user);
+        return "redirect:/index";
+    }
+
 }

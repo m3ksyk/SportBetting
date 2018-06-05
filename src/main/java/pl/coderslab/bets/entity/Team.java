@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -39,6 +40,15 @@ public class Team{
     //flag to check if team is currently in-game
     private boolean inGame;
 
+    @ManyToMany
+    @JoinColumn
+    private List<User> subscribers;
+
+    public List<User> addSubscriber(User user){
+        List<User> subscribers = this.getSubscribers();
+        subscribers.add(user);
+        return subscribers;
+    }
     @Override
     public String toString() {
         return name;

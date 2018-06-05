@@ -6,11 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import pl.coderslab.bets.entity.Team;
 import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.repository.UserRepository;
 import pl.coderslab.bets.service.UserService;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -100,4 +102,18 @@ public class UserController {
         return "userMessages";
     }
 
+    @GetMapping("/user/subscriptions")
+    public String subs(WebRequest request, @RequestParam("id") long id, Model model){
+        String userName = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(userName);
+        User user2 = userService.findById(id);
+        if (!user.equals(user2)){
+            return "403";
+        }
+        List<Team> subs = user.getSubscriptions();
+        model.addAttribute("user", user);
+        model.addAttribute("subs", subs);
+        model.addAttribute("id", user.getId());
+        return "userSubs";
+    }
 }

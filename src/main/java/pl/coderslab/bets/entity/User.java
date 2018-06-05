@@ -49,6 +49,16 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Message> messages;
 
+    @ManyToMany
+    @JoinColumn
+    private List<Team> subscriptions;
+
+    public List<Team> addSubscription(Team team){
+        List<Team> subscriptions = this.getSubscriptions();
+        subscriptions.add(team);
+        return subscriptions;
+    }
+
     public String toString() {
         return this.getUsername();
     }

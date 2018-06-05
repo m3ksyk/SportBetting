@@ -12,4 +12,6 @@ public interface TeamService {
     List<Team> findAllAvailableTeams();
 
     List<Team> findAllTeamsSortedByStanding();
+
+    Team findTeamById(long id);
 }

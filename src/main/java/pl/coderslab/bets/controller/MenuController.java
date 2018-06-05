@@ -157,4 +157,6 @@ public class MenuController {
         model.addAttribute("user", user);
         return "redirect:/index";
     }
+
+    //TODO Actions for group bets pages
 }

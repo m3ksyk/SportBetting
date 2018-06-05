@@ -1,19 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> <head>
 
-    <title>access denied</title>
+    <title>not found</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 <body>
 <div class="container-fluid" align="center">
-    <h3 class="alert-danger">Sorry. You are trying to view pages you do not have access to.
-        Go back to homepage, sign in or register to continue.</h3>
+
+    <h1 class="alert-danger">Page not found</h1>
     <div><span><a class="btn btn-default" th:href="@{/index}">homepage</a></span>
-        <div><span><a class="btn btn-default" th:href="@{/login}">login</a></span>
-            <span><a class="btn btn-default" th:href="@{/register}">register</a></span>
-        </div>
-        <p><img th:src="@{/nopower.jpg}"/></p>
+    <div><span><a class="btn btn-default" th:href="@{/login}">login</a></span>
+        <span><a class="btn btn-default" th:href="@{/register}">register</a></span>
     </div>
+</div>
+</div>
 </body>
 </html>

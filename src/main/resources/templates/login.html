@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
     <meta charset="UTF-8">
     <title>login</title>
-    <!--<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
 
 </head>
 <body>
-
-<!--<span sec:authorize="isAuthenticated()">-->
 
     <a class="btn btn-default" href="register"> REGISTER </a> <br>
         <form th:action="@{/login}"   method="post">
@@ -21,6 +18,5 @@
         <p><input type="submit" value="Log in" /></p>
 </form>
 
-<!--</span>-->
 </body>
 </html>

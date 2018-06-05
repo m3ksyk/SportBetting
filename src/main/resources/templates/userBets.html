@@ -24,12 +24,10 @@
         <th> rate </th>
     </tr>
     <tr th:each="bet, iterStat: ${userBets}" >
-        <td th:text="${bet.game}">
-            <a class="btn btn-default" th:href="@{/menu/viewSingleGame(id=${bet.game.id})}">show </a></td>
+        <td th:text="${bet.game}"></td>
         <td th:text="${bet.bettingTeam}"></td>
         <td th:text="${bet.amount}"></td>
         <td th:text="${bet.rate}"></td>
-
     </tr>
 </table>
 </span>

@@ -5,16 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
-import pl.coderslab.bets.entity.Bet;
-import pl.coderslab.bets.entity.Game;
-import pl.coderslab.bets.entity.Team;
-import pl.coderslab.bets.entity.User;
-import pl.coderslab.bets.service.BetService;
-import pl.coderslab.bets.service.GameService;
-import pl.coderslab.bets.service.TeamService;
-import pl.coderslab.bets.service.UserService;
+import pl.coderslab.bets.entity.*;
+import pl.coderslab.bets.service.*;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,6 +29,9 @@ public class MenuController {
 
     @Autowired
     BetService betService;
+
+    @Autowired
+    ApikeyService apikeyService;
 
     @GetMapping("/menu/view")
     public String viewGames(Model model, WebRequest request) {
@@ -158,5 +158,17 @@ public class MenuController {
         return "redirect:/index";
     }
 
+    @GetMapping("/menu/apikey")
+    @ResponseBody
+    public String getApikey() {
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[64];
+        random.nextBytes(bytes);
+        String akString = DatatypeConverter.printHexBinary(bytes).toLowerCase();
+        Apikey apikey = new Apikey();
+        apikey.setValue(akString);
+        apikeyService.save(apikey);
+        return "your apikey: " + akString;
+    }
     //TODO Actions for group bets pages
 }

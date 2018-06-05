@@ -34,8 +34,8 @@ public class MenuController {
     BetService betService;
 
     @GetMapping("/menu/view")
-    public String viewGames(Model model, WebRequest request){
-        String name =request.getUserPrincipal().getName();
+    public String viewGames(Model model, WebRequest request) {
+        String name = request.getUserPrincipal().getName();
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
@@ -45,8 +45,8 @@ public class MenuController {
     }
 
     @GetMapping("/menu/live")
-    public String viewLiveGames(Model model, WebRequest request){
-        String name =request.getUserPrincipal().getName();
+    public String viewLiveGames(Model model, WebRequest request) {
+        String name = request.getUserPrincipal().getName();
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
@@ -56,8 +56,8 @@ public class MenuController {
     }
 
     @GetMapping("/menu/results")
-    public String viewResults(Model model, WebRequest request){
-        String name =request.getUserPrincipal().getName();
+    public String viewResults(Model model, WebRequest request) {
+        String name = request.getUserPrincipal().getName();
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
@@ -67,8 +67,8 @@ public class MenuController {
     }
 
     @GetMapping("/menu/standings")
-    public String viewStandings(Model model, WebRequest request){
-        String name =request.getUserPrincipal().getName();
+    public String viewStandings(Model model, WebRequest request) {
+        String name = request.getUserPrincipal().getName();
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
@@ -78,8 +78,8 @@ public class MenuController {
     }
 
     @GetMapping("/menu/api")
-    public String viewApi(Model model, WebRequest request){
-        String name =request.getUserPrincipal().getName();
+    public String viewApi(Model model, WebRequest request) {
+        String name = request.getUserPrincipal().getName();
         User user = userService.findByUsername(name);
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
@@ -92,7 +92,7 @@ public class MenuController {
         String username = request.getUserPrincipal().getName();
         User user = userService.findByUsername(username);
         User user2 = userService.findById(id);
-        if (!user.equals(user2)){
+        if (!user.equals(user2)) {
             return "403";
         }
         List<Bet> bets = betService.findAllLiveUserBets(user);
@@ -107,7 +107,7 @@ public class MenuController {
         String username = request.getUserPrincipal().getName();
         User user = userService.findByUsername(username);
         User user2 = userService.findById(id);
-        if (!user.equals(user2)){
+        if (!user.equals(user2)) {
             return "403";
         }
 
@@ -126,6 +126,7 @@ public class MenuController {
 
         return "game";
     }
+
     @GetMapping("/subscribe")
     public String subscribeToTeam(Model model, @RequestParam("id") long id, WebRequest request) {
         String username = request.getUserPrincipal().getName();
@@ -141,4 +142,19 @@ public class MenuController {
         return "redirect:/index";
     }
 
+    @GetMapping("/unsubscribe")
+    public String unsubscribe(Model model, @RequestParam("id") long id, WebRequest request) {
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(username);
+
+        Team team = teamService.findTeamById(id);
+        team.removeSubscriber(user);
+        user.removeSubscription(team);
+        teamService.save(team);
+        userService.save(user);
+
+        model.addAttribute("id", user.getId());
+        model.addAttribute("user", user);
+        return "redirect:/index";
+    }
 }

@@ -49,9 +49,17 @@ public class Team{
         subscribers.add(user);
         return subscribers;
     }
+
+    public List<User> removeSubscriber(User user) {
+        List<User> subscribers = this.getSubscribers();
+        subscribers.remove(user);
+        return subscribers;
+    }
+
     @Override
     public String toString() {
         return name;
     }
+
 }
 

@@ -22,7 +22,7 @@
             <th> draws </th>
             <th> goals scored </th>
             <th> goals lost </th>
-            <th> subscribe </th>
+            <th> unsubscribe </th>
 
         </tr>
         <tr th:each="team, iterStat: ${subs}" >
@@ -34,7 +34,7 @@
             <td th:text="${team.draws}"></td>
             <td th:text="${team.goalsScored}"></td>
             <td th:text="${team.goalsLost}"></td>
-            <td> <a class="btn btn-default" th:href="@{/subscribe(id=${team.id})}"> subscribe </a> </td>
+            <td> <a class="btn btn-default" th:href="@{/unsubscribe(id=${team.id})}"> unsubscribe </a> </td>
 
         </tr>
     </table>

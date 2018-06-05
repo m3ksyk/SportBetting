@@ -62,4 +62,10 @@ public class User {
     public String toString() {
         return this.getUsername();
     }
+
+    public List<Team> removeSubscription(Team team) {
+        List<Team> subscriptions = this.getSubscriptions();
+        subscriptions.remove(team);
+        return subscriptions;
+    }
 }

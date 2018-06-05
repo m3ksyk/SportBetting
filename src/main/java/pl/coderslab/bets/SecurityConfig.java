@@ -25,6 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         // web.debug(true);
+//        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**");
+
     }
 
     @Bean
@@ -41,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources", "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll()
+
                 .antMatchers("/", "/webjars/**", "/login", "/api/*").permitAll()
                 .antMatchers("/populate").denyAll()
                 .antMatchers("/register").anonymous()
@@ -64,5 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
 
     }
+
 
 }

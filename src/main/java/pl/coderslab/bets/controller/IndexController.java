@@ -35,5 +35,4 @@ public class IndexController {
         model.addAttribute("liveGames", gameService.findGamesByStatus("live"));
         return "index";
     }
-
 }

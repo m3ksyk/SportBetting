@@ -11,6 +11,7 @@ import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.repository.UserRepository;
 import pl.coderslab.bets.service.UserService;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerNewUser(@ModelAttribute User user, BindingResult result){
+    public String registerNewUser(@Valid @ModelAttribute User user, BindingResult result){
         if(result.hasErrors()){
             return "register";
         }
@@ -53,10 +54,10 @@ public class UserController {
         return "login.html";
     }
     //complete the logout function
-    @GetMapping("/logout")
-    public String logout(){
-        return "logout";
-    }
+//    @GetMapping("/logout")
+//    public String logout(){
+//        return "logout";
+//    }
 
     @GetMapping("/user/recharge")
     public String recharge(WebRequest request, Model model, @RequestParam("id") long id){
@@ -76,6 +77,7 @@ public class UserController {
 
     @PostMapping("/user/recharge")
     public String recharge(WebRequest request, @RequestParam("amount") double amount, Model model){
+
         String name =request.getUserPrincipal().getName();
         User user = userService.findByUsername(name);
         BigDecimal current = user.getWallet();

@@ -3,6 +3,7 @@ package pl.coderslab.bets.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import pl.coderslab.bets.entity.Bet;
@@ -12,6 +13,7 @@ import pl.coderslab.bets.service.BetService;
 import pl.coderslab.bets.service.GameService;
 import pl.coderslab.bets.service.UserService;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 
 @Controller
@@ -30,7 +32,7 @@ public class BetController {
         Game game = gameService.findById(id);
         String username = request.getUserPrincipal().getName();
         User user = userService.findByUsername(username);
-
+        Bet bet = new Bet();
         double amount = 0;
         int choice = 0;
         model.addAttribute("amount", amount);
@@ -38,13 +40,18 @@ public class BetController {
         model.addAttribute("user", user);
         model.addAttribute("id", game.getId());
         model.addAttribute("game", game);
+        model.addAttribute("bet", bet);
         return "placeBet";
     }
 
     @PostMapping("/game/bet")
-    public String placeBet( WebRequest request, @RequestParam("amount") double amount,
-                            @RequestParam("id") Long id,
-                            @RequestParam("choice") int choice, Model model){
+    public String placeBet(@Valid Bet bet, BindingResult result, WebRequest request, @RequestParam("amount") double amount,
+                           @RequestParam("id") Long id,
+                           @RequestParam("choice") int choice, Model model){
+            if (result.hasErrors()) {
+                return "placeBet";
+            }
+
         Game game = gameService.findById(id);
 
         String name =request.getUserPrincipal().getName();
@@ -58,7 +65,7 @@ public class BetController {
             //TODO dodac komunikat błędu, że ilosc nie moze byc mniejsza niz 0
         }
 
-        Bet bet = new Bet();
+//        Bet bet = new Bet();
         bet.setUser(user);
         bet.setAmount(BigDecimal.valueOf(amount));
         bet.setGame(game);

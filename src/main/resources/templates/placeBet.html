@@ -33,16 +33,19 @@
 <div>
 
     Your bet:
-<form th:action="@{/game/bet}"  method="post">
+<form th:action="@{/game/bet}" th:object="${bet}" method="post">
     <input type="hidden" name="id" th:value="${game.id}" />
-    <p>amount: <input type="text" name="amount" required/> amount </p>
+    <!--<p>amount: <input type="text" name="amount" required/> amount </p>-->
+    <p>amount: <input type="text" name="amount" th:value="${bet.amount}"/> amount </p>
+    <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"> error msg</p>
 
-    <p>bet choice: <select name="choice" >
-        <option value="1"> home team wins </option> <!-- ustawia betting team na home team gry i willDraw na false -->
-        <option value="2"> home team wins or draws</option> <!-- ustawia betting team na home team gry i willDraw na true -->
-        <option value="3"> draw</option> <!-- ustawia betting team na null i willDraw na true -->
-        <option value="4"> away team wins or draws</option> <!-- ustawia betting team na away team gry i willDraw na true -->
-        <option value="5"> away team wins </option> <!-- ustawia betting team na away team gry i willDraw na false-->
+    <p>bet choice:
+    <select name="choice" >
+        <option value="1"> home team wins </option>
+        <option value="2"> home team wins or draws</option>
+        <option value="3"> draw</option>
+        <option value="4"> away team wins or draws</option>
+        <option value="5"> away team wins </option>
 
     </select></p>
 

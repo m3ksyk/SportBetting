@@ -33,14 +33,20 @@ public class ScheduledTasksService {
     @Autowired
     BetService betService;
 
-    //for now we only have one sport : football, other sports may be added if functionalities are working
+    /**
+     * method createSports is utilized to populate database with objects of entity Sport.
+     * The current build of the application supports only one sport: Football
+     */
     public void createSports() {
         Sport football = new Sport();
         football.setName("Football");
         sportService.save(football);
     }
 
-    //for now we only have one league for one sport, more may be added later if funcs work correctly
+    /**
+     * method createLeagues is utilized to populate database with objects of entity League.
+     * The current build of the application supports only one league
+     */
     public void createLeagues() {
         League footballLeague1 = new League();
         footballLeague1.setName("First Football League of Fakerstan");
@@ -48,7 +54,10 @@ public class ScheduledTasksService {
         leagueService.save(footballLeague1);
     }
 
-    //for now 20 teams in one league of one sport
+    /**
+     * method createTeams is utilized to populate the database with objects of entity Team.
+     * In the current build, the method inserts 20 randomly generated teams, linked to created Sports and Leagues
+     */
     public void createTeams() {
         Faker faker = new Faker();
         for (int i = 0; i < 20; i++) {
@@ -60,7 +69,19 @@ public class ScheduledTasksService {
         }
     }
 
-    //generating 5 new games every 5 minutes
+    /**
+     * method regenerate games generates events based on a  schedule.
+     * Every 5 minutes, five new games are created. A new object Game() is created.
+     * The teams are chosen by random from a collection of teams available (teams that currently are not in-game).
+     * After choosing the teams and adding them to the game, the odds are generated.
+     * Odd generation is based on Java Faker random number generation.
+     * The time for the game to start and end is set:
+     *      start - current time + 5 minutes
+     *      end - current time + 10 minutes
+     * The status of the created game is set to "scheduled".
+     * The status of the game is checked by method gameStatusCheck() .
+     * After generation, the status of teams and the game is persisted.
+     */
     @Scheduled(cron = "0 0/5 * * * ?")
     public void regenerateGames() {
         Faker faker = new Faker();
@@ -102,13 +123,28 @@ public class ScheduledTasksService {
                 game.setStart(startDate);
                 game.setEnd(endDate);
                 game.setStatus("scheduled");
-
+                teamService.save(home);
+                teamService.save(away);
                 gameService.save(game);
             }
         }
     }
 
-    //checks every minute for games going live or finishing
+    /**
+     * Method gameStatusCheck queries the database on a fixed time base of 1 second, searching for games
+     * starting or finishing.
+     * Each game that has start time that is past current time and game status is "scheduled",
+     * has its status switched to "live".
+     * Each game that has end time that is past current time and game status is "live",
+     * has its status switched to "finished".
+     * Each finished game then has its final results set.
+     * The goals scored and lost for each team are added up, the winner of the game is chosen.
+     * If the amount of the goals scored by both teams is equal, the result of the game is set as draw.
+     * In that case, the game winner is set to 'null'.
+     * After match summary, the teams have their "in-game" flag set to false,
+     * and are therefore free to be chosen for other games
+     * The results of all actions are saved in the database.
+     */
     @Scheduled(cron = "1/1 * * * * ?")
     public void gameStatusCheck() {
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
@@ -155,7 +191,13 @@ public class ScheduledTasksService {
         }
     }
 
-    //add to game results by random every minute
+    /**
+     * The resultRigger method adds goals by random to each team that is in a live game.
+     * The method works on a scheduled basis and is called every 30 seconds.
+     * The list of live games is aquired from the database.
+     * Then the score of each team has 0 to 1 goals added to their score by random.
+     * The results are saved in the database
+     */
     @Scheduled(cron = "0/30 * * * * ?")
     public void resultRigger() {
         List<Game> liveGames = gameService.findGamesByStatus("live");
@@ -166,7 +208,17 @@ public class ScheduledTasksService {
             gameService.save(g);
         }
     }
-    //finds bets not paid out
+
+    /**
+     * The gamesPayout method is responsible for settling the results of the bets based on the game results.
+     * Method is called on a scheduled basis of 1 second.
+     * First, the database is queried for games, which are finished (status - "finished"),
+     * but not paid out (paidOut flag on 'false').
+     * Then for for each game in the list, a list of the game's bets is acquired from the database.
+     * Then, each bet in the list is checked, and paid out depending on the game results,
+     * using payoutSingle bet method.
+     * The results of operations are then saved in the database
+     */
     @Scheduled(cron = "1/1 * * * * ?")
     public void gamesPayout() {
         List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");
@@ -210,7 +262,11 @@ public class ScheduledTasksService {
         }
     }
 
-    //sorts teams table standing by scored goals
+    /**
+     * The method queries the database for the list of teams every two minutes and sorts the list
+     * based on the teams scored goals. The teams in the sorted list then have their table standing set.
+     * The results of operations are saved in database.
+     */
     @Scheduled(cron = "* 0/2 * * * ?")
     public void StandingsCheck() {
         List<Team> teams = teamService.findAllTeams();
@@ -223,6 +279,15 @@ public class ScheduledTasksService {
         }
     }
 
+    /**
+     *
+     * @param b - bet to be paid out
+     * @param rate - bet rate, acquired from game data
+     *
+     * Method calculates the amount won by the user placing the bet, based on the bet amount and bet rate.
+     * The 'win' flag of the bet is set to true. The amount calculated is added to user wallet.
+     * The results of operation are saved in the database
+     */
     public void payoutSingleBet(Bet b, double rate) {
         b.setWin(true);
         BigDecimal amount = b.getAmount();

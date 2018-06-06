@@ -54,8 +54,8 @@ public class BetController {
 
         if (wallet.compareTo(BigDecimal.valueOf(amount)) < 0 || amount < 0){
             return "placeBet";
-            //dodac komunikaty błędu, że za mało na koncie, zalecic doładowanie
-            //dodac komunikat błędu, że ilosc nie moze byc mniejsza niz 0
+            //TODO dodac komunikaty błędu, że za mało na koncie, zalecic doładowanie
+            //TODO dodac komunikat błędu, że ilosc nie moze byc mniejsza niz 0
         }
 
         Bet bet = new Bet();

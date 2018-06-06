@@ -35,7 +35,7 @@
     Your bet:
 <form th:action="@{/game/bet}"  method="post">
     <input type="hidden" name="id" th:value="${game.id}" />
-    <p>amount: <input type="text" name="amount" /> amount </p>
+    <p>amount: <input type="text" name="amount" required/> amount </p>
 
     <p>bet choice: <select name="choice" >
         <option value="1"> home team wins </option> <!-- ustawia betting team na home team gry i willDraw na false -->

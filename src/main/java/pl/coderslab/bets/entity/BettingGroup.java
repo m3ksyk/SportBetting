@@ -9,6 +9,7 @@ import java.util.Set;
 @Data
 @Entity
 public class BettingGroup {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

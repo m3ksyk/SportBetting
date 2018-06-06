@@ -2,9 +2,12 @@ package pl.coderslab.bets.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,13 +24,17 @@ public class User {
 
     @NotNull
     @Column(unique = true)
+    @NotBlank(message = "field cannot be empty. Also, must be a unique username")
     private String username;
 
     @NotNull
+    @Email(message = "must be in correct format")
+    @NotBlank(message = "field must be filled")
     @Column(unique = true)
     private String email;
 
     @NotNull
+    @NotBlank(message = "field must be filled")
     private String password;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -38,6 +45,7 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Bet> bets;
 
+    @CreditCardNumber
     private String creditCardNum;
 
     @NotNull

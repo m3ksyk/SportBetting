@@ -77,16 +77,6 @@ public class MenuController {
         return "standings";
     }
 
-    @GetMapping("/menu/api")
-    public String viewApi(Model model, WebRequest request) {
-        String name = request.getUserPrincipal().getName();
-        User user = userService.findByUsername(name);
-        model.addAttribute("id", user.getId());
-        model.addAttribute("user", user);
-
-        return "api";
-    }
-
     @GetMapping("/menu/viewbets")
     public String viewUsersCurrentBets(Model model, @RequestParam("id") long id, WebRequest request) {
         String username = request.getUserPrincipal().getName();
@@ -158,6 +148,16 @@ public class MenuController {
         return "redirect:/index";
     }
 
+    @GetMapping("/menu/api")
+    public String viewApi(Model model, WebRequest request) {
+        String name = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(name);
+        model.addAttribute("id", user.getId());
+        model.addAttribute("user", user);
+
+        return "api";
+    }
+
     @GetMapping("/menu/apikey")
     @ResponseBody
     public String getApikey() {
@@ -170,5 +170,26 @@ public class MenuController {
         apikeyService.save(apikey);
         return "your apikey: " + akString;
     }
+//    @{/menu/viewGroup(id=${user.id})}
+    @GetMapping("/menu/viewGroup")
+    public String viewGroup(){
+        //find a group by user id, and return it to model
+        return "group";
+    }
+//    /menu/viewGroupBets(id=${user.id}
+    @GetMapping("/menu/viewGroupBets")
+    public String viewGroupBets(){
+        //find a group bets history by user id, and return it to model
+        return "group";
+    }
+//"@{/menu/viewGroupLiveBets(id=${user.id})}"
+    @GetMapping("/menu/viewGroupLiveBets")
+    public String viewGroupLiveBets(){
+        //find a group live bets by user id, and return it to model
+        return "group";
+    }
+    //TODO  create group page. MO:  user sends messages with invitations to other users,
+    //TODO  cont.    all users who accept join the created group
+
     //TODO Actions for group bets pages
 }

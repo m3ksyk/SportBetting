@@ -14,16 +14,16 @@
 
     <form th:action="@{/register}"  th:object="${user}" method="post">
 
-    <p>username: <input id="username" type="text" th:field="*{username}" /></p>
+    <p>username: <input id="username" type="text" th:field="*{username}" required/></p>
     <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"> error msg</p>
 
-    <p>email: <input id="email" type="text" th:field="*{email}" /></p>
+    <p>email: <input id="email" type="text" th:field="*{email}" required/></p>
     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"> error msg</p>
 
-    <p>password: <input id="password" type="text" th:field="*{password}" /></p>
+    <p>password: <input id="password" type="text" th:field="*{password}" required/></p>
     <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"> error msg</p>
 
-    <p>credit card: <input id="creditCardNum" type="text" th:field="*{creditCardNum}" /></p>
+    <p>credit card: <input id="creditCardNum" type="text" th:field="*{creditCardNum}"/></p>
     <p th:if="${#fields.hasErrors('creditCardNum')}" th:errors="*{creditCardNum}"> error msg</p>
 
     <p><input type="submit" value="Submit" /></p>

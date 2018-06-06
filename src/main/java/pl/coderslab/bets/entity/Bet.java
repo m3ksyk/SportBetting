@@ -3,6 +3,8 @@ package pl.coderslab.bets.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
 @Data
@@ -21,6 +23,8 @@ public class Bet {
     @JoinColumn
     private Game game; //the game bet is made on
 
+    @NotBlank(message = "field must be filled")
+    @Min(value = 1, message = "value cannot be less than 0")
     private BigDecimal amount;
 
     private BigDecimal rate; //rate is gotten from game team odd

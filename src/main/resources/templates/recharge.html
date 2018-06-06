@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>recharge</title>
-    <!--<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css} "/>
 
 </head>
@@ -18,9 +17,8 @@
 
 <form th:action="@{/user/recharge}" method="post">
 
-    <p>amount: <input type="text" name="amount" /> amount </p>
-    <!--<p th:if="${#fields.hasErrors('amount')}" th:errors="${amount}">  </p>-->
-    <p>credit card number: <input type="text" th:field="${user.creditCardNum}" /> credCardNum </p>
+    <p>amount: <input type="text" name="amount" required/> amount </p>
+    <p>credit card number: <input type="text" th:field="${user.creditCardNum}" required/> credCardNum </p>
     <p th:if="${#fields.hasErrors('creditCardNum')}" th:errors="${user.creditCardNum}">  </p>
 
     <p><input type="submit" value="Charge" /></p>

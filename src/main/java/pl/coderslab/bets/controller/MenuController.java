@@ -170,21 +170,24 @@ public class MenuController {
         apikeyService.save(apikey);
         return "your apikey: " + akString;
     }
-//    @{/menu/viewGroup(id=${user.id})}
+
     @GetMapping("/menu/viewGroup")
-    public String viewGroup(){
+    public String viewGroup(@RequestParam("id") long id, WebRequest request){
+        //id is user id
         //find a group by user id, and return it to model
         return "group";
     }
-//    /menu/viewGroupBets(id=${user.id}
+
     @GetMapping("/menu/viewGroupBets")
-    public String viewGroupBets(){
+    public String viewGroupBets(@RequestParam("id") long id, WebRequest request){
+        //id is user id
         //find a group bets history by user id, and return it to model
         return "group";
     }
-//"@{/menu/viewGroupLiveBets(id=${user.id})}"
+
     @GetMapping("/menu/viewGroupLiveBets")
-    public String viewGroupLiveBets(){
+    public String viewGroupLiveBets(@RequestParam("id") long id, WebRequest request){
+        //id is user id
         //find a group live bets by user id, and return it to model
         return "group";
     }

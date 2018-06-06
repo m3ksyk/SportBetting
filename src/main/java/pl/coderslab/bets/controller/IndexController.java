@@ -26,8 +26,12 @@ public class IndexController {
     @GetMapping("/index")
     public String index(WebRequest request, Model model){
         String userName = request.getUserPrincipal().getName();
+        if(userName == null){
+            return "403";
+        }
         User user = userService.findByUsername(userName);
         model.addAttribute("user", user);
+        model.addAttribute("id", user.getId());
         model.addAttribute("liveGames", gameService.findGamesByStatus("live"));
         return "index";
     }

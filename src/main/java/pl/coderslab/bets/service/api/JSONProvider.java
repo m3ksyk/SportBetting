@@ -32,6 +32,11 @@ public class JSONProvider {
     @Autowired
     LeagueService leagueService;
 
+    /**
+     *
+     * @return JSON containing list of live games
+     * @throws JSONException
+     */
     public JSONObject getLiveGames() throws JSONException {
         final String status = "live";
         JSONObject liveGamesJSON = new JSONObject();
@@ -40,6 +45,11 @@ public class JSONProvider {
         return liveGamesJSON;
     }
 
+    /**
+     *
+     * @return JSON containing a list of games results
+     * @throws JSONException
+     */
     public JSONObject getGamesResults() throws JSONException {
         final String status = "finished";
         JSONObject finishedGamesJSON = new JSONObject();
@@ -47,7 +57,11 @@ public class JSONProvider {
         finishedGamesJSON.put("finishedGames", finishedGames);
         return finishedGamesJSON;
     }
-
+    /**
+     *
+     * @return JSON containing a list of scheduled games
+     * @throws JSONException
+     */
     public JSONObject getScheduledGames() {
         final String status = "scheduled";
         JSONObject scheduledGamesJSON = new JSONObject();
@@ -56,7 +70,11 @@ public class JSONProvider {
         return scheduledGamesJSON;
     }
 
-
+    /**
+     *
+     * @return JSON containing a list of leagues
+     * @throws JSONException
+     */
     public JSONObject getLeagues() {
         JSONObject leaguesJSON= new JSONObject();
         List<League> leagues = leagueService.findAllLeagues();
@@ -64,6 +82,11 @@ public class JSONProvider {
         return leaguesJSON;
     }
 
+    /**
+     *
+     * @return JSON containing a list of sports
+     * @throws JSONException
+     */
     public JSONObject getSports() {
         JSONObject sportsJSON = new JSONObject();
         List<Sport> sports = sportService.findAllSports();
@@ -71,6 +94,11 @@ public class JSONProvider {
         return sportsJSON;
     }
 
+    /**
+     *
+     * @return JSON containing a list of teams
+     * @throws JSONException
+     */
     public JSONObject getTeams() {
         JSONObject teamsJSON = new JSONObject();
         List<Team> teams = teamService.findAllTeams();

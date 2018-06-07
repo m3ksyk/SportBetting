@@ -6,6 +6,10 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Class League represents football leagues
+ */
+
 @Data
 @Entity
 public class League {

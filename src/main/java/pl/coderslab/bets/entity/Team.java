@@ -7,6 +7,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Class Team represents sports teams that take part in the event
+ */
+
 @Data
 @Entity
 public class Team{

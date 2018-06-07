@@ -18,7 +18,7 @@ public class Message {
     private String sender;
 
     @ManyToOne
-    User recipient;
+    private User recipient;
 
     private String text;
 

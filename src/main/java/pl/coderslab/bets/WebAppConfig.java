@@ -9,6 +9,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Filter;
 
+/**
+ * API web configuration class
+ */
+
 @Configuration
 public class WebAppConfig implements WebMvcConfigurer {
 

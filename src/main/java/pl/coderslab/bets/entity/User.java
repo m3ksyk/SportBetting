@@ -13,6 +13,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Class represents application users
+ */
+
 @Data
 @Entity
 @Table(name = "users")

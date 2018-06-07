@@ -4,6 +4,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * Apikey class represents keys used to access api endpoints, which provide datafeed
+ */
+
 @Data
 @Entity
 public class Apikey {

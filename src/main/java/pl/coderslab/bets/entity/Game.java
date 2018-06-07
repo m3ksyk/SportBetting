@@ -10,6 +10,10 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Class Game represents sports events
+ */
+
 @Data
 @Entity
 public class Game {

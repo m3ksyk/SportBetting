@@ -62,7 +62,7 @@ public class JSONProvider {
      * @return JSON containing a list of scheduled games
      * @throws JSONException
      */
-    public JSONObject getScheduledGames() {
+    public JSONObject getScheduledGames() throws JSONException {
         final String status = "scheduled";
         JSONObject scheduledGamesJSON = new JSONObject();
         List<Game> scheduledGames = gameService.findGamesByStatus("scheduled");
@@ -75,7 +75,7 @@ public class JSONProvider {
      * @return JSON containing a list of leagues
      * @throws JSONException
      */
-    public JSONObject getLeagues() {
+    public JSONObject getLeagues() throws JSONException {
         JSONObject leaguesJSON= new JSONObject();
         List<League> leagues = leagueService.findAllLeagues();
         leaguesJSON.put("leagues", leagues);
@@ -87,7 +87,7 @@ public class JSONProvider {
      * @return JSON containing a list of sports
      * @throws JSONException
      */
-    public JSONObject getSports() {
+    public JSONObject getSports() throws JSONException {
         JSONObject sportsJSON = new JSONObject();
         List<Sport> sports = sportService.findAllSports();
         sportsJSON.put("sports", sports);
@@ -99,7 +99,7 @@ public class JSONProvider {
      * @return JSON containing a list of teams
      * @throws JSONException
      */
-    public JSONObject getTeams() {
+    public JSONObject getTeams() throws JSONException {
         JSONObject teamsJSON = new JSONObject();
         List<Team> teams = teamService.findAllTeams();
         teamsJSON.put("teams", teams);

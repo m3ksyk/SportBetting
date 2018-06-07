@@ -5,6 +5,10 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Class represents sports supported in the api
+ */
+
 @Data
 @Entity
 public class Sport {

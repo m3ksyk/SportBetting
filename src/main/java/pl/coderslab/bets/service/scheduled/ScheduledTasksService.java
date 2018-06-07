@@ -150,57 +150,58 @@ public class ScheduledTasksService {
      */
     public void notifySubscribers(Team team1, Team team2, Timestamp startDate){
 //using simple entity-based message system
-        List<User> teamSubscribers = team1.getSubscribers();
-        for (User u : teamSubscribers) {
-            pl.coderslab.bets.entity.Message message = new pl.coderslab.bets.entity.Message();
-            message.setSender("SYSTEM");
-            message.setRecipient(u);
-            message.setRead(false);
-            message.setTitle("Incoming game notification");
-            message.setText("your team " + team1.getName() +
-                    " has a match against "+ team2.getName() + " scheduled for " + startDate);
+//        List<User> teamSubscribers = team1.getSubscribers();
+//        for (User u : teamSubscribers) {
+//            pl.coderslab.bets.entity.Message message = new pl.coderslab.bets.entity.Message();
+//            message.setSender("SYSTEM");
+//            message.setRecipient(u);
+//            message.setRead(false);
+//            message.setTitle("Incoming game notification");
+//            message.setText("your team " + team1.getName() +
+//                    " has a match against "+ team2.getName() + " scheduled for " + startDate);
+//
+//        }
 
-        }
         //trying to implement sending messages to topic - JMS
             messageService.publishMessage("newGame", "your team " + team1.getName() +
                     " has a match against "+ team2.getName() + " scheduled for " + startDate);
     }
 
-    @Scheduled(cron = "1/1 * * * * ?")
-    public void userListener(){
-        // this wont work
-        List<User> users= userService.findAll();
-
-        final ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
-        connectionFactory.setTrustedPackages(Arrays.asList("pl.coderslab"));
-
-        Connection connection = null;
-
-        try {
-
-            connection = connectionFactory.createConnection();
-            final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-            final Topic topic = session.createTopic("newGame");
-
-            final MessageConsumer consumer = session.createConsumer(topic);
-
-            connection.start();
-
-            final Message jmsMessage = consumer.receive();
-
-        } catch (final JMSException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (JMSException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    @Scheduled(cron = "1/1 * * * * ?")
+//    public void userListener(){
+//        // this wont work
+//        List<User> users= userService.findAll();
+//
+//        final ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
+//        connectionFactory.setTrustedPackages(Arrays.asList("pl.coderslab"));
+//
+//        Connection connection = null;
+//
+//        try {
+//
+//            connection = connectionFactory.createConnection();
+//            final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+//
+//            final Topic topic = session.createTopic("newGame");
+//
+//            final MessageConsumer consumer = session.createConsumer(topic);
+//
+//            connection.start();
+//
+//            final Message jmsMessage = consumer.receive();
+//
+//        } catch (final JMSException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (connection != null) {
+//                try {
+//                    connection.close();
+//                } catch (JMSException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 
     /**
      * this method is used to set game odds, the odds are random generated values

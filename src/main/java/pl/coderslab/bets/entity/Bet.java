@@ -7,6 +7,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
+/**
+ * Class Bet represents bets placed by users
+ */
+
 @Data
 @Entity
 public class Bet {

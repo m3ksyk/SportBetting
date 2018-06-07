@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Filters requests sent to api. Only requests containing vali api key are allowed
+ */
+
 @WebFilter(urlPatterns = "/api/*")
 public class ApikeyFilter implements Filter {
 

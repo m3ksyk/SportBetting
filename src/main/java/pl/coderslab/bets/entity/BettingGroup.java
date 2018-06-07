@@ -6,6 +6,10 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ *  Class betting group represnts users placing bets together
+ */
+
 @Data
 @Entity
 public class BettingGroup {

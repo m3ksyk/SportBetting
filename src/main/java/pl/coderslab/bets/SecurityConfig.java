@@ -16,6 +16,10 @@ import pl.coderslab.bets.serviceImpl.UserDetailsServiceImpl;
 
 import javax.validation.Validator;
 
+/**
+ * api security configuration
+ */
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

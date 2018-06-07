@@ -4,6 +4,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * Class role represents the role of the user.
+ * Class is used in api security system
+ */
+
 @Data
 @Entity
 @Table(name = "roles")

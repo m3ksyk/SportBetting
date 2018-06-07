@@ -9,6 +9,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class used for security, login actions
+ */
+
 public class UserPrincipal implements UserDetails {
     private String password;
     private String username;

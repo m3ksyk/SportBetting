@@ -6,9 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import pl.coderslab.bets.entity.Message;
 import pl.coderslab.bets.entity.Team;
 import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.repository.UserRepository;
+import pl.coderslab.bets.service.MessageService;
 import pl.coderslab.bets.service.UserService;
 
 import javax.validation.Valid;
@@ -22,6 +24,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    MessageService messageService;
 
     @GetMapping("/register")
     public String userCreate(WebRequest request, Model model){
@@ -53,11 +58,6 @@ public class UserController {
 
         return "login.html";
     }
-    //complete the logout function
-//    @GetMapping("/logout")
-//    public String logout(){
-//        return "logout";
-//    }
 
     @GetMapping("/user/recharge")
     public String recharge(WebRequest request, Model model, @RequestParam("id") long id){
@@ -99,8 +99,11 @@ public class UserController {
         if (!user.equals(user2)){
             return "403";
         }
+        List<Message> messages = messageService.findAllUserMessages(user);
+
         model.addAttribute("user", user);
         model.addAttribute("id", user.getId());
+        model.addAttribute("messages", messages);
         return "userMessages";
     }
 

@@ -15,8 +15,8 @@
 
 <span sec:authorize="isAuthenticated()">
 
-BOLD un-read messages!
-or show only unread messages
+<!--BOLD un-read messages!-->
+<!--or show only unread messages-->
 <ul class="list list-inline">
     <li th:each="message: ${messages}" >
         <p th:text="${message.title}"></p>

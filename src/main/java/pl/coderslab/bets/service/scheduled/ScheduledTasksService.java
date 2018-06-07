@@ -1,12 +1,16 @@
 package pl.coderslab.bets.service.scheduled;
 
 import com.github.javafaker.Faker;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.coderslab.bets.entity.*;
 import pl.coderslab.bets.service.*;
 
+import javax.jms.*;
+import javax.jms.Message;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -32,6 +36,9 @@ public class ScheduledTasksService {
 
     @Autowired
     BetService betService;
+
+    @Autowired
+    MessageService messageService;
 
     /**
      * method createSports is utilized to populate database with objects of entity Sport.
@@ -90,6 +97,12 @@ public class ScheduledTasksService {
 
             for (int i = 0; i < 5; i++) {
                 Game game = new Game();
+
+                //setting start and end date for the games
+                Timestamp startDate = Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
+                Timestamp endDate = Timestamp.valueOf(LocalDateTime.now().plusMinutes(10));
+
+                //choosing teams by random
                 game.setSport(sportService.findSportByName("football"));
                 int id1 = random.nextInt(teams.size()-1);
                 int id2 = random.nextInt(teams.size()-1);
@@ -105,6 +118,10 @@ public class ScheduledTasksService {
                 home.setInGame(true);
                 away.setInGame(true);
 
+                //notify teams subscribers about incoming matches
+                notifySubscribers(home, away, startDate);
+                notifySubscribers(away, home, startDate);
+
                 teams.remove(id1);
                 teams.remove(id2);
 
@@ -115,16 +132,72 @@ public class ScheduledTasksService {
                 game.setAwayTeamWinOdd(setOdd());
                 game.setAwayTeamWinOrDrawOdd(setOdd());
 
-                //setting start and end date for the games
-                Timestamp startDate = Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
-                Timestamp endDate = Timestamp.valueOf(LocalDateTime.now().plusMinutes(10));
-
                 game.setStart(startDate);
                 game.setEnd(endDate);
                 game.setStatus("scheduled");
                 teamService.save(home);
                 teamService.save(away);
                 gameService.save(game);
+            }
+        }
+    }
+
+    /**
+     * method sends messages to users informing them about incoming game of the teams the user is subscribed
+     * @param team1 team the user is subscribed to
+     * @param team2 team the user's team is playing against
+     * @param startDate match start date
+     */
+    public void notifySubscribers(Team team1, Team team2, Timestamp startDate){
+//using simple entity-based message system
+        List<User> teamSubscribers = team1.getSubscribers();
+        for (User u : teamSubscribers) {
+            pl.coderslab.bets.entity.Message message = new pl.coderslab.bets.entity.Message();
+            message.setSender("SYSTEM");
+            message.setRecipient(u);
+            message.setRead(false);
+            message.setTitle("Incoming game notification");
+            message.setText("your team " + team1.getName() +
+                    " has a match against "+ team2.getName() + " scheduled for " + startDate);
+
+        }
+        //trying to implement sending messages to topic - JMS
+            messageService.publishMessage("newGame", "your team " + team1.getName() +
+                    " has a match against "+ team2.getName() + " scheduled for " + startDate);
+    }
+
+    @Scheduled(cron = "1/1 * * * * ?")
+    public void userListener(){
+        // this wont work
+        List<User> users= userService.findAll();
+
+        final ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
+        connectionFactory.setTrustedPackages(Arrays.asList("pl.coderslab"));
+
+        Connection connection = null;
+
+        try {
+
+            connection = connectionFactory.createConnection();
+            final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            final Topic topic = session.createTopic("newGame");
+
+            final MessageConsumer consumer = session.createConsumer(topic);
+
+            connection.start();
+
+            final Message jmsMessage = consumer.receive();
+
+        } catch (final JMSException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (JMSException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

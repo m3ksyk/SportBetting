@@ -14,6 +14,7 @@ import pl.coderslab.bets.service.UserService;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,6 +54,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(long id) {
         return userRepository.getOne(id);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }
 

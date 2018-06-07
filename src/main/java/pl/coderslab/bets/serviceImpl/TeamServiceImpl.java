@@ -3,6 +3,7 @@ package pl.coderslab.bets.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderslab.bets.entity.Team;
+import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.repository.TeamRepository;
 import pl.coderslab.bets.service.TeamService;
 

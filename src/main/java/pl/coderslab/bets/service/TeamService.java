@@ -1,6 +1,7 @@
 package pl.coderslab.bets.service;
 
 import pl.coderslab.bets.entity.Team;
+import pl.coderslab.bets.entity.User;
 
 import java.util.List;
 

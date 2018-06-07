@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import pl.coderslab.bets.entity.Team;
+import pl.coderslab.bets.entity.User;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface TeamRepository  extends JpaRepository <Team, Long> {
     List<Team> findAllOrderByTableStandingDesc();
 
     List<Team> findAllByInGameFalse();
+
 }

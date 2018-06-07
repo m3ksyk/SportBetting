@@ -182,14 +182,14 @@ public class MenuController {
     public String viewGroupBets(@RequestParam("id") long id, WebRequest request){
         //id is user id
         //find a group bets history by user id, and return it to model
-        return "group";
+        return "groupBets";
     }
 
     @GetMapping("/menu/viewGroupLiveBets")
     public String viewGroupLiveBets(@RequestParam("id") long id, WebRequest request){
         //id is user id
         //find a group live bets by user id, and return it to model
-        return "group";
+        return "groupLiveBets";
     }
     //TODO  create group page. MO:  user sends messages with invitations to other users,
     //TODO  cont.    all users who accept join the created group

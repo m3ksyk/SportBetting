@@ -73,7 +73,7 @@ public class ScheduledTasksService {
      * method regenerate games generates events based on a  schedule.
      * Every 5 minutes, five new games are created. A new object Game() is created.
      * The teams are chosen by random from a collection of teams available (teams that currently are not in-game).
-     * After choosing the teams and adding them to the game, the odds are generated.
+     * After choosing the teams and adding them to the game, the odds are generated using setOdd() method.
      * Odd generation is based on Java Faker random number generation.
      * The time for the game to start and end is set:
      *      start - current time + 5 minutes
@@ -84,7 +84,6 @@ public class ScheduledTasksService {
      */
     @Scheduled(cron = "0 0/5 * * * ?")
     public void regenerateGames() {
-        Faker faker = new Faker();
         Random random = new Random();
         List<Team> teams = teamService.findAllAvailableTeams();
         if (teams.size() >= 2) {
@@ -110,11 +109,11 @@ public class ScheduledTasksService {
                 teams.remove(id2);
 
                 //for now odds are created by random using faker
-                game.setHomeTeamWinOdd(faker.number().randomDouble(2, 1, 5));
-                game.setHomeTeamWinOrDrawOdd(faker.number().randomDouble(2, 1, 5));
-                game.setDrawOdd(faker.number().randomDouble(2, 1, 5));
-                game.setAwayTeamWinOdd(faker.number().randomDouble(2, 1, 5));
-                game.setAwayTeamWinOrDrawOdd(faker.number().randomDouble(2, 1, 5));
+                game.setHomeTeamWinOdd(setOdd());
+                game.setHomeTeamWinOrDrawOdd(setOdd());
+                game.setDrawOdd(setOdd());
+                game.setAwayTeamWinOdd(setOdd());
+                game.setAwayTeamWinOrDrawOdd(setOdd());
 
                 //setting start and end date for the games
                 Timestamp startDate = Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
@@ -128,6 +127,15 @@ public class ScheduledTasksService {
                 gameService.save(game);
             }
         }
+    }
+
+    /**
+     * this method is used to set game odds, the odds are random generated values
+     * @return random generated double - odd (value between 1 and 5)
+     */
+    public double setOdd(){
+        Faker faker = new Faker();
+        return faker.number().randomDouble(2, 1, 5);
     }
 
     /**
@@ -171,7 +179,7 @@ public class ScheduledTasksService {
                 awayTeam.setGamesLost(awayTeam.getGamesLost() + 1);
                 homeTeam.setGamesWon(homeTeam.getGamesWon() + 1);
             } else {
-                g.setWinner(null);//was null
+                g.setWinner(null);
                 g.setDrawn(true);
                 awayTeam.setDraws(awayTeam.getDraws() + 1);
                 homeTeam.setDraws(homeTeam.getDraws() + 1);
@@ -205,6 +213,7 @@ public class ScheduledTasksService {
         for (Game g : liveGames) {
             g.setAwayTeamScore(g.getAwayTeamScore() + random.nextInt(2));
             g.setHomeTeamScore(g.getAwayTeamScore() + random.nextInt(2));
+
             gameService.save(g);
         }
     }

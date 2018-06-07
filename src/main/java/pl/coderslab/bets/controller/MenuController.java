@@ -123,10 +123,14 @@ public class MenuController {
         User user = userService.findByUsername(username);
 
         Team team = teamService.findTeamById(id);
-        team.addSubscriber(user);
-        user.addSubscription(team);
-        teamService.save(team);
-        userService.save(user);
+        List<Team> subs = user.getSubscriptions();
+        if(!subs.contains(team)){
+            team.addSubscriber(user);
+            user.addSubscription(team);
+            teamService.save(team);
+            userService.save(user);
+
+        }
         model.addAttribute("id", user.getId());
         model.addAttribute("user", user);
         return "redirect:/index";
@@ -171,26 +175,26 @@ public class MenuController {
         return "your apikey: " + akString;
     }
 
-    @GetMapping("/menu/viewGroup")
-    public String viewGroup(@RequestParam("id") long id, WebRequest request){
-        //id is user id
-        //find a group by user id, and return it to model
-        return "group";
-    }
-
-    @GetMapping("/menu/viewGroupBets")
-    public String viewGroupBets(@RequestParam("id") long id, WebRequest request){
-        //id is user id
-        //find a group bets history by user id, and return it to model
-        return "groupBets";
-    }
-
-    @GetMapping("/menu/viewGroupLiveBets")
-    public String viewGroupLiveBets(@RequestParam("id") long id, WebRequest request){
-        //id is user id
-        //find a group live bets by user id, and return it to model
-        return "groupLiveBets";
-    }
+//    @GetMapping("/menu/viewGroup")
+//    public String viewGroup(@RequestParam("id") long id, WebRequest request){
+//        //id is user id
+//        //find a group by user id, and return it to model
+//        return "group";
+//    }
+//
+//    @GetMapping("/menu/viewGroupBets")
+//    public String viewGroupBets(@RequestParam("id") long id, WebRequest request){
+//        //id is user id
+//        //find a group bets history by user id, and return it to model
+//        return "groupBets";
+//    }
+//
+//    @GetMapping("/menu/viewGroupLiveBets")
+//    public String viewGroupLiveBets(@RequestParam("id") long id, WebRequest request){
+//        //id is user id
+//        //find a group live bets by user id, and return it to model
+//        return "groupLiveBets";
+//    }
     //TODO  create group page. MO:  user sends messages with invitations to other users,
     //TODO  cont.    all users who accept join the created group
 

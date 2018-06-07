@@ -78,6 +78,9 @@ public class UserController {
     @PostMapping("/user/recharge")
     public String recharge(WebRequest request, @RequestParam("amount") double amount, Model model){
 
+        if(amount <= 0){
+            return "recharge";
+        }
         String name =request.getUserPrincipal().getName();
         User user = userService.findByUsername(name);
         BigDecimal current = user.getWallet();

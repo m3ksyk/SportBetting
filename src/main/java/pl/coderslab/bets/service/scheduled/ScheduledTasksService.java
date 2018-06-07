@@ -2,6 +2,7 @@ package pl.coderslab.bets.service.scheduled;
 
 import com.github.javafaker.Faker;
 import org.apache.activemq.spring.ActiveMQConnectionFactory;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import pl.coderslab.bets.service.*;
 
 import javax.jms.*;
 import javax.jms.Message;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -89,6 +91,7 @@ public class ScheduledTasksService {
      * The status of the game is checked by method gameStatusCheck() .
      * After generation, the status of teams and the game is persisted.
      */
+
     @Scheduled(cron = "0 0/5 * * * ?")
     public void regenerateGames() {
         Random random = new Random();
@@ -148,7 +151,10 @@ public class ScheduledTasksService {
      * @param team2 team the user's team is playing against
      * @param startDate match start date
      */
+    @Transactional
     public void notifySubscribers(Team team1, Team team2, Timestamp startDate){
+        Hibernate.initialize(team1.getSubscribers());
+
         List<User> teamSubscribers = team1.getSubscribers();
         for (User u : teamSubscribers) {
             pl.coderslab.bets.entity.Message message = new pl.coderslab.bets.entity.Message();

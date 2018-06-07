@@ -17,8 +17,8 @@
 
 <form th:action="@{/user/recharge}" method="post">
 
-    <p>amount: <input type="text" name="amount" required/> amount </p>
-    <p>credit card number: <input type="text" th:field="${user.creditCardNum}" required/> credCardNum </p>
+    <p>amount: <input type="text" name="amount" pattern = "[1-9][0-9]{0,2}" required/> </p>
+    <p>credit card number: <input type="text" th:field="${user.creditCardNum}" required/> </p>
     <p th:if="${#fields.hasErrors('creditCardNum')}" th:errors="${user.creditCardNum}">  </p>
 
     <p><input type="submit" value="Charge" /></p>

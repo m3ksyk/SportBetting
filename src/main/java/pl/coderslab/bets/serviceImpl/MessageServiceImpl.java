@@ -1,5 +1,6 @@
 package pl.coderslab.bets.serviceImpl;
 
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
@@ -7,9 +8,9 @@ import pl.coderslab.bets.entity.Message;
 import pl.coderslab.bets.entity.User;
 import pl.coderslab.bets.repository.MessageRepository;
 import pl.coderslab.bets.service.MessageService;
+import pl.coderslab.bets.service.jms.Subscriber;
 
-import javax.jms.JMSException;
-import javax.jms.TextMessage;
+import javax.jms.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     MessageRepository messageRepository;
 
+    Subscriber subscriber;
 
     @Override
     public List<Message> findAllUserMessages(User user) {
@@ -45,6 +47,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     public String receiveFromTopic(String topicName) {
+        try {
+            subscriber.getMessage(5000);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
         String messageStr = "";
         final javax.jms.Message message = jmsTemplate.receive();
         try {
@@ -56,7 +63,6 @@ public class MessageServiceImpl implements MessageService {
         }
         return messageStr;
     }
-
 
     @Override
     public void publishMessage(String topicName, String msg) {

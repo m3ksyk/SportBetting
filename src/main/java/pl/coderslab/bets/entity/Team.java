@@ -1,6 +1,8 @@
 package pl.coderslab.bets.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Comparator;
@@ -46,6 +48,7 @@ public class Team{
 
     @ManyToMany
     @JoinColumn
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> subscribers;
 
     public List<User> addSubscriber(User user){

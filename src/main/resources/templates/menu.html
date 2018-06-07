@@ -19,9 +19,9 @@
 <span sec:authorize="isAuthenticated()">
 
 <span><a class="btn btn-default" th:href="@{/menu/viewbets(id=${user.id})}"> my live bets </a> </span>
-<span><a class="btn btn-default" th:href="@{/menu/viewGroup(id=${user.id})}"> my group </a> </span>
-<span><a class="btn btn-default" th:href="@{/menu/viewGroupBets(id=${user.id})}"> my group bets </a> </span>
-<span><a class="btn btn-default" th:href="@{/menu/viewGroupLiveBets(id=${user.id})}"> my group live bets </a> </span>
+<!--<span><a class="btn btn-default" th:href="@{/menu/viewGroup(id=${user.id})}"> my group </a> </span>-->
+<!--<span><a class="btn btn-default" th:href="@{/menu/viewGroupBets(id=${user.id})}"> my group bets </a> </span>-->
+<!--<span><a class="btn btn-default" th:href="@{/menu/viewGroupLiveBets(id=${user.id})}"> my group live bets </a> </span>-->
 <span><a class="btn btn-default" th:href="@{/menu/viewaccount(id=${user.id})}"> account </a> </span>
 <span><form th:action="@{/logout}" method="POST">
 	         <input type="submit" value="Logout"/>

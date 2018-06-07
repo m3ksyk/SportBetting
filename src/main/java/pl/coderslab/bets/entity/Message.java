@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
-@Table(name = "message")
+@Table(name = "messages")
 public class Message {
 
     @Id
@@ -22,6 +22,4 @@ public class Message {
     private User recipient;
 
     private String text;
-
-    private boolean read;
 }

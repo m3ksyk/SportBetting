@@ -14,8 +14,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SportBetsApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(SportBetsApplication.class, args);
-        ConsumerService cs = context.getBean(ConsumerService.class);
-        cs.start();
+//        ConfigurableApplicationContext context = SpringApplication.run(SportBetsApplication.class, args);
+        SpringApplication.run(SportBetsApplication.class, args);
+//        ConsumerService cs = context.getBean(ConsumerService.class);
+//        cs.start();
     }
 }

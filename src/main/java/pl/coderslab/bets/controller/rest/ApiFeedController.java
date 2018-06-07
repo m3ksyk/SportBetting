@@ -1,49 +1,61 @@
 package pl.coderslab.bets.controller.rest;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.bets.entity.League;
-import pl.coderslab.bets.entity.Team;
-import pl.coderslab.bets.service.api.JSONProvider;
+import pl.coderslab.bets.dto.GameDto;
+import pl.coderslab.bets.dto.LeagueDto;
+import pl.coderslab.bets.dto.SportDto;
+import pl.coderslab.bets.dto.TeamDto;
+import pl.coderslab.bets.service.api.DTOProvider;
 
 import java.util.List;
 
+/**
+ * methods in this class provide access points with data
+ * The data provided is passed as DTOs, which are auto-converted To JSON
+ */
 @RestController
 @RequestMapping("/api")
 public class ApiFeedController {
 
     @Autowired
-    JSONProvider jsonProvider;
+    DTOProvider dtoProvider;
 
     @GetMapping(path= "/leagues")
-    public List<League> getLeaguesAction(@RequestParam("apikey") String value) {
-            return jsonProvider.getLeagues();
+    @ResponseBody
+    public List<LeagueDto> getLeaguesAction(@RequestParam("apikey") String value) {
+
+        return dtoProvider.getLeagues();
     }
-//    list<xyzDTO> list = DtoService.find...
+
     @GetMapping(path= "/sports")
-    public JSONObject getSportsAction(@RequestParam("apikey") String value) {
-            return jsonProvider.getSports();
+    @ResponseBody
+    public List<SportDto> getSportsAction(@RequestParam("apikey") String value) {
+        return dtoProvider.getSports();
     }
 
     @GetMapping(path= "/teams")
-    public String getTeamsAction(@RequestParam("apikey") String value) {
-            return jsonProvider.getTeams();
+    @ResponseBody
+    public List<TeamDto> getTeamsAction(@RequestParam("apikey") String value) {
+            return dtoProvider.getTeams();
     }
 
     @GetMapping(path= "/live-games")
-    public JSONObject getLiveGamesAction(@RequestParam("apikey") String value) {
-            return jsonProvider.getLiveGames();
+    @ResponseBody
+    public List<GameDto> getLiveGamesAction(@RequestParam("apikey") String value) {
+            return dtoProvider.getLiveGames();
     }
 
     @GetMapping(path= "/scheduled-games")
-    public JSONObject getScheduledGamesAction(@RequestParam("apikey") String value) {
-            return jsonProvider.getScheduledGames();
+    @ResponseBody
+    public List<GameDto> getScheduledGamesAction(@RequestParam("apikey") String value) {
+            return dtoProvider.getScheduledGames();
     }
 
     @GetMapping(path= "/games-results")
-    public JSONObject getGamesResultsAction(@RequestParam("apikey") String value) {
-            return jsonProvider.getGamesResults();
+    @ResponseBody
+    public List<GameDto> getGamesResultsAction(@RequestParam("apikey") String value) {
+            return dtoProvider.getGamesResults();
     }
 
 }

@@ -93,7 +93,7 @@ public class ScheduledTasksService {
     public void regenerateGames() {
         Random random = new Random();
         List<Team> teams = teamService.findAllAvailableTeams();
-        if (teams.size() >= 2) {
+        if (teams.size() > 2) {
 
             for (int i = 0; i < 5; i++) {
                 Game game = new Game();
@@ -154,11 +154,10 @@ public class ScheduledTasksService {
             pl.coderslab.bets.entity.Message message = new pl.coderslab.bets.entity.Message();
             message.setSender("SYSTEM");
             message.setRecipient(u);
-            message.setRead(false);
             message.setTitle("Incoming game notification");
             message.setText("your team " + team1.getName() +
                     " has a match against "+ team2.getName() + " scheduled for " + startDate);
-
+            messageService.saveSimpleMessage(message);
         }
         //trying to implement sending messages to topic - JMS
             messageService.publishMessage("newGame", "your team " + team1.getName() +

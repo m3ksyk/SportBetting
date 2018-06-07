@@ -1,5 +1,6 @@
 package pl.coderslab.bets.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.mapping.ToOne;
 

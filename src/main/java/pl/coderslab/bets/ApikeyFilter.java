@@ -47,7 +47,6 @@ public class ApikeyFilter implements Filter {
         if (this.apikeyService.findApiKeyByValue(value) == null) {
             res.sendError(400, "Bad request: apikey not found or wrong apikey");
         } else {
-            res.sendRedirect(req.getRequestURI());
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

@@ -8,11 +8,14 @@ import java.util.List;
 public interface MessageService {
     void saveSimpleMessage(Message message);
 
+    List<Message> findAllUserMessages(User user);
 
     void sendPointToPointMessage(String queueName, String msg);
+
     String receive(String queueName);
 
     void publishMessage(String topicName, String msg);
 
-    List<Message> findAllUserMessages(User user);
+    public String receiveFromTopic(String topicName);
+
 }

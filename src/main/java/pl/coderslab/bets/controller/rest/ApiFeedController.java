@@ -3,7 +3,11 @@ package pl.coderslab.bets.controller.rest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.bets.entity.League;
+import pl.coderslab.bets.entity.Team;
 import pl.coderslab.bets.service.api.JSONProvider;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -13,17 +17,17 @@ public class ApiFeedController {
     JSONProvider jsonProvider;
 
     @GetMapping(path= "/leagues")
-    public JSONObject getLeaguesAction(@RequestParam("apikey") String value) {
+    public List<League> getLeaguesAction(@RequestParam("apikey") String value) {
             return jsonProvider.getLeagues();
     }
-
+//    list<xyzDTO> list = DtoService.find...
     @GetMapping(path= "/sports")
     public JSONObject getSportsAction(@RequestParam("apikey") String value) {
             return jsonProvider.getSports();
     }
 
     @GetMapping(path= "/teams")
-    public JSONObject getTeamsAction(@RequestParam("apikey") String value) {
+    public String getTeamsAction(@RequestParam("apikey") String value) {
             return jsonProvider.getTeams();
     }
 

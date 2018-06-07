@@ -3,6 +3,7 @@ package pl.coderslab.bets.service.api;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import pl.coderslab.bets.entity.Game;
 import pl.coderslab.bets.entity.League;
@@ -44,7 +45,6 @@ public class JSONProvider {
         liveGamesJSON.put("liveGames", liveGames);
         return liveGamesJSON;
     }
-
     /**
      *
      * @return JSON containing a list of games results
@@ -65,7 +65,7 @@ public class JSONProvider {
     public JSONObject getScheduledGames() throws JSONException {
         final String status = "scheduled";
         JSONObject scheduledGamesJSON = new JSONObject();
-        List<Game> scheduledGames = gameService.findGamesByStatus("scheduled");
+        List<Game> scheduledGames = gameService.findGamesByStatus(status);
         scheduledGamesJSON.put("scheduledGames", scheduledGames);
         return scheduledGamesJSON;
     }
@@ -75,11 +75,12 @@ public class JSONProvider {
      * @return JSON containing a list of leagues
      * @throws JSONException
      */
-    public JSONObject getLeagues() throws JSONException {
+    public List<League> getLeagues() throws JSONException {
         JSONObject leaguesJSON= new JSONObject();
         List<League> leagues = leagueService.findAllLeagues();
-        leaguesJSON.put("leagues", leagues);
-        return leaguesJSON;
+        return leagues;
+//        leaguesJSON.put("leagues", leagues);
+//        return leaguesJSON;
     }
 
     /**
@@ -99,10 +100,11 @@ public class JSONProvider {
      * @return JSON containing a list of teams
      * @throws JSONException
      */
-    public JSONObject getTeams() throws JSONException {
+    public String getTeams() throws JSONException {
         JSONObject teamsJSON = new JSONObject();
         List<Team> teams = teamService.findAllTeams();
-        teamsJSON.put("teams", teams);
-        return teamsJSON;
+        return teams.toString();
+//        teamsJSON.put("teams", teams);
+//        return teamsJSON;
     }
 }

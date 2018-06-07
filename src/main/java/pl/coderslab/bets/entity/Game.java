@@ -22,7 +22,7 @@ public class Game {
     private long id;
 
     @ManyToOne
-    @JoinColumn   //spr czy nie zakrzaczy
+    @JoinColumn
     private Sport sport;
 
     private Timestamp start;

@@ -32,12 +32,14 @@ public class BetController {
         Game game = gameService.findById(id);
         String username = request.getUserPrincipal().getName();
         User user = userService.findByUsername(username);
+        BigDecimal wallet = user.getWallet();
         Bet bet = new Bet();
         double amount = 0;
         int choice = 0;
         model.addAttribute("amount", amount);
         model.addAttribute("choice", choice);
         model.addAttribute("user", user);
+        model.addAttribute("wallet", wallet);
         model.addAttribute("id", game.getId());
         model.addAttribute("game", game);
         model.addAttribute("bet", bet);

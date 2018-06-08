@@ -31,7 +31,7 @@
 </p>
 </div>
 <div>
-
+  <p> Your current funds: <span th:text="$wallet"></span> </p>
     Your bet:
 <form th:action="@{/game/bet}" th:object="${bet}" method="post">
     <input type="hidden" name="id" th:value="${game.id}" />

@@ -166,8 +166,8 @@ public class ScheduledTasksService {
             messageService.saveSimpleMessage(message);
         }
         //trying to implement sending messages to topic - JMS
-            messageService.publishMessage("newGame", "your team " + team1.getName() +
-                    " has a match against "+ team2.getName() + " scheduled for " + startDate);
+//            messageService.publishMessage("newGame", "your team " + team1.getName() +
+//                    " has a match against "+ team2.getName() + " scheduled for " + startDate);
     }
 
     /**

@@ -80,7 +80,7 @@ public class ScheduledTasksService {
 
     /**
      * method regenerate games generates events based on a  schedule.
-     * Every 5 minutes, five new games are created. A new object Game() is created.
+     * Every 5 minutes, three new games are created. A new object Game() is created.
      * The teams are chosen by random from a collection of teams available (teams that currently are not in-game).
      * After choosing the teams and adding them to the game, the odds are generated using setOdd() method.
      * Odd generation is based on Java Faker random number generation.
@@ -91,14 +91,14 @@ public class ScheduledTasksService {
      * The status of the game is checked by method gameStatusCheck() .
      * After generation, the status of teams and the game is persisted.
      */
-
+    @Transactional
     @Scheduled(cron = "0 0/5 * * * ?")
     public void regenerateGames() {
         Random random = new Random();
         List<Team> teams = teamService.findAllAvailableTeams();
-        if (teams.size() > 2) {
+        if (teams.size() > 6) {
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 3; i++) {
                 Game game = new Game();
 
                 //setting start and end date for the games
@@ -194,6 +194,7 @@ public class ScheduledTasksService {
      * and are therefore free to be chosen for other games
      * The results of all actions are saved in the database.
      */
+    @Transactional
     @Scheduled(cron = "1/1 * * * * ?")
     public void gameStatusCheck() {
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
@@ -269,6 +270,7 @@ public class ScheduledTasksService {
      * using payoutSingle bet method.
      * The results of operations are then saved in the database
      */
+    @Transactional
     @Scheduled(cron = "1/1 * * * * ?")
     public void gamesPayout() {
         List<Game> finishedGames = gameService.findFinishedGamesNotPaidOut("finished");

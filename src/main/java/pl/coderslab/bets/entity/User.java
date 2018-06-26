@@ -52,7 +52,6 @@ public class User {
     @CreditCardNumber
     private String creditCardNum;
 
-    @NotNull
     private BigDecimal wallet;
 
     @OneToOne(fetch = FetchType.LAZY)
